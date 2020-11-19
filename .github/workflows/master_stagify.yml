@@ -32,4 +32,4 @@ jobs:
         app-name: 'stagify'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_8a313ad637114daea2732df30cd7ebe9 }}
-        package: ./stagifyfrontend/dist/stagifyfrontend/*
+        package: ./stagifyfrontend/dist/stagifyfrontend
