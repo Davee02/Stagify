@@ -1,0 +1,32 @@
+name: Build and deploy Django app to Azure Web App
+
+on:
+  push:
+    branches:
+      - feature/yaml-pipeline
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.8.x' 
+        architecture: 'x64'
+
+    - name: Build using AppService-Build
+      uses: azure/appservice-build@v1
+      with:
+        platform: python
+        platform-version: '3.8'
+        source-directory: './stagifyapi'
+
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'stagifyapi'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_API_PUBLISH_PROFILE }}
+        package: './stagifyapi'
