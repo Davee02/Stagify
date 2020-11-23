@@ -1,12 +1,9 @@
 name: Build and deploy Django app to Azure Web App
 
-on:
-  push:
-    branches:
-      - feature/yaml-pipeline
+on: push
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +20,26 @@ jobs:
         platform: python
         platform-version: '3.8'
         source-directory: './stagifyapi'
+
+    - name: Upload artifact
+      if: github.ref == 'refs/heads/master'
+      uses: actions/upload-artifact@v2
+      with:
+        name: stagifyapi
+        path: |
+          ./stagifyapi
+          !**/__pycache__
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: stagifyapi
+        path: './stagifyapi'
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
