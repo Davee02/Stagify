@@ -1,0 +1,50 @@
+name: Build and deploy Node.js app to Azure Web App
+
+on: push
+
+defaults:
+  run:
+    working-directory: ./stagifyfrontend
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Set up Node.js version
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.13.0'
+
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm run build -- --prod
+        npm run test -- --watch=false
+
+    - name: Upload artifact
+      if: github.ref == 'refs/heads/master'
+      uses: actions/upload-artifact@v2
+      with:
+        name: stagifyfrontend
+        path: ./stagifyfrontend/dist/stagifyfrontend
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: stagifyfrontend
+        path: './stagifyfrontend'
+    
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'stagifyapp'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PUBLISH_PROFILE }}
+        package: './stagifyfrontend'
