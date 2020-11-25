@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'api.apps.ApiConfig'
 ]
 
 MIDDLEWARE = [
@@ -72,8 +73,8 @@ TEMPLATES = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://127.0.0.1:4200",
-    "http://stagifyapi.azurewebsites.net/",
-    "https://stagifyapi.azurewebsites.net/",
+    "http://stagifyapi.azurewebsites.net",
+    "https://stagifyapi.azurewebsites.net",
 ]
 
 WSGI_APPLICATION = 'stagifyapi.wsgi.application'
