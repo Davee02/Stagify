@@ -62,8 +62,8 @@ TEMPLATES = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://127.0.0.1:4200",
-    "http://stagifyapi.azurewebsites.net",
-    "https://stagifyapi.azurewebsites.net",
+    "http://stagifyapp.azurewebsites.net",
+    "https://stagifyapp.azurewebsites.net",
 ]
 
 WSGI_APPLICATION = 'stagifyapi.wsgi.application'
