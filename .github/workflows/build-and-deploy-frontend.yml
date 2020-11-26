@@ -22,10 +22,10 @@ jobs:
       run: |
         npm install
         npm run build -- --prod
-        npm run test -- --watch=false
+        npm run test -- --watch=false --browsers ChromeHeadless
 
     - name: Upload artifact
-      # if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master'
       uses: actions/upload-artifact@v2
       with:
         name: stagifyfrontend
@@ -34,7 +34,7 @@ jobs:
   deploy:
     runs-on: windows-latest
     needs: build
-    # if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v2
