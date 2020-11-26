@@ -8,7 +8,7 @@ defaults:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@master
@@ -22,7 +22,7 @@ jobs:
       run: |
         npm install
         npm run build -- --prod
-        npm run test -- --watch=false
+        npm run test -- --watch=false --browsers ChromeHeadless
 
     - name: Upload artifact
       if: github.ref == 'refs/heads/master'
