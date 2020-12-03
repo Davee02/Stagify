@@ -1,0 +1,25 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon{
+    margin: 5px;
+    height: 40px;
+}
+
+.search-bar{
+    margin-right: 10px;
+}
+
+.user-search-container{
+    display: flex;
+    align-items: center;
+}
+
+.user-icon{
+    border-radius: 25px;
+    padding:5px;
+    height: 30px;
+    border: 1px solid black;
+}
