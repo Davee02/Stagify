@@ -46,7 +46,7 @@ jobs:
 
     - uses: montudor/action-zip@v0.1.1
       with:
-        args: unzip -qq artifact.zip -d ./stagifyapi
+        args: unzip -qq artifact.zip -d .
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
