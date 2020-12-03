@@ -5,15 +5,6 @@ from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 import json
 
-from .models import Question
-
-
-def index(request):
-    firstQuestion = Question.objects.first()
-
-    return JsonResponse({"question": firstQuestion.question_text})
-
-
 @require_http_methods(["POST"])
 def register(request):
     try:
