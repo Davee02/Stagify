@@ -1,5 +1,9 @@
 from django.db import models
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
+def select_storage():
+    return FileSystemStorage() if settings.DEBUG else FileSystemStorage()
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -10,3 +14,8 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+
+class Concert(models.Model):
+    displayname = models.CharField(max_length=500)
+    description = models.CharField(max_length=10000)
+    artwork = models.FileField(upload_to='concert_artworks', storage=select_storage)
