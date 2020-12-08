@@ -1,9 +1,10 @@
 from django.db import models
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from storages.backends.azure_storage import AzureStorage
 
 def select_storage():
-    return FileSystemStorage() if settings.DEBUG else FileSystemStorage()
+    return FileSystemStorage() if settings.DEBUG else AzureStorage()
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)

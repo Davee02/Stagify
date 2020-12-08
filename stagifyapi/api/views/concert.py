@@ -2,6 +2,7 @@ import json
 from django.http.response import JsonResponse
 from django.views.decorators.http import require_http_methods
 from ..models import Concert
+import uuid
 
 @require_http_methods(["POST"])
 def create_concert(request):
@@ -49,6 +50,7 @@ def set_artwork(request, concertId):
         
         concert = Concert.objects.get(pk=concertId)
         concert.artwork = request.FILES["artwork"]
+        concert.artwork.name = '%s%s' % (uuid.uuid4(), concert.artwork.name)
         concert.save()
 
         return JsonResponse({"message": "Successfully updated concert artwork"})

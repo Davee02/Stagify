@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'corsheaders',
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
+    "storages"
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,6 @@ USE_TZ = True
 
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+AZURE_CONTAINER = os.environ.get('AZURE_MEDIA_STORAGE_CONTAINER', 'container for media storage on azure')
+AZURE_CONNECTION_STRING = os.environ.get('AZURE_MEDIA_STORAGE_CONNECTION_STRING', 'connection string for media storage on azure')
