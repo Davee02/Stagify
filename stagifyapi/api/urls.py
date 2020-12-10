@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import auth, test, concert
+from .views import auth, concert
 
 urlpatterns = [
     path('user/register', auth.register, name='register'),

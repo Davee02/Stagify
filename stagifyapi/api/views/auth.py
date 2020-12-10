@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 import json
 
+
 @require_http_methods(["POST"])
 def register(request):
     try:
@@ -12,10 +13,14 @@ def register(request):
         username = request_user['username']
         email = request_user['email']
         password = request_user['password']
+        firstname = request_user['firstname']
+        lastname = request_user['lastname']
 
-        user = User.objects.create_user(username, email, password)
-        response = {"id": user.id, "email": user.email, "username": user.username}
-        
+        user = User.objects.create_user(
+            username, email, password, first_name=firstname, last_name=lastname)
+        response = {"id": user.id, "email": user.email, "username": user.username,
+                    "firstname": user.first_name, "lastname": user.last_name}
+
         return JsonResponse(response)
     except KeyError:
         return JsonResponse({"message": "Malformed data!"}, status=400)
@@ -51,6 +56,7 @@ def logOut(request):
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
         logout(request)
+
         return JsonResponse({"message": "Logging out was successful"})
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
@@ -62,7 +68,10 @@ def userInfo(request):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
-        response = {"id": request.user.id, "email": request.user.email, "username": request.user.username}
+        user = request.user
+        response = {"id": user.id, "email": user.email,
+                    "username": user.username, "firstname": user.first_name, "lastname": user.last_name}
+
         return JsonResponse(response)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
