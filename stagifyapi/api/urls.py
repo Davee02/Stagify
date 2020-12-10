@@ -7,7 +7,8 @@ urlpatterns = [
     path('user/login', auth.logIn, name='login'),
     path('user/logout', auth.logOut, name='logout'),
     path('user/', auth.userInfo, name='userinfo'),
-    path('concerts/', concert.create_concert, name='create concert'),
-    path('concerts/<int:concertId>', concert.read_concert, name='read concert'),
+    path('concerts/', concert.index, name='index endpoint - create new concert or list all'),
+    path('concerts/suggestions', concert.suggestions, name='concert suggestions for user'),
+    path('concerts/<int:concertId>', concert.concert_id, name='read or update concert'),
     path('concerts/<int:concertId>/artwork', concert.set_artwork, name='set concert artwork'),
 ]
