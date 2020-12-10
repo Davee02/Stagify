@@ -114,7 +114,7 @@ def suggestions(request):
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
-@require_http_methods(["POST"])
+@require_http_methods(["PUT"])
 def set_artwork(request, concertId):
     try:
         if not request.user.is_authenticated:

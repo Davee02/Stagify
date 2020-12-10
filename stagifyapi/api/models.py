@@ -6,17 +6,15 @@ from storages.backends.azure_storage import AzureStorage
 def select_storage():
     return FileSystemStorage() if settings.DEBUG else AzureStorage()
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+class Artist(models.Model):
+    displayname = models.CharField(max_length=500)
+    description = models.CharField(max_length=10000)
+    avatar = models.FileField(upload_to='artist_avatars', storage=select_storage)
 
 class Concert(models.Model):
     displayname = models.CharField(max_length=500)
     description = models.CharField(max_length=10000)
     artwork = models.FileField(upload_to='concert_artworks', storage=select_storage)
+    startDateTime = models.DateTimeField()
+    duration = models.PositiveIntegerField()
+    artist = models.ForeignKey(Artist, on_delete=models.DO_NOTHING)
