@@ -7,20 +7,32 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { SearchComponent } from './components/search/search.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ConcertItemComponent } from './components/concert-item/concert-item.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { OverlayModule, OVERLAY_PROVIDERS } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    ConcertItemComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    OverlayModule
   ],
-  providers: [],
+  providers: [FormBuilder, MatSnackBar],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
