@@ -59,7 +59,7 @@ def read_concert(request, concertId):
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").get(pk=concertId)
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").get(pk=concertId)
 
         return JsonResponse(concert, safe=False)
     except KeyError:
@@ -77,7 +77,7 @@ def by_artist(request, artistId):
 
         artist = Artist.objects.get(pk=artistId)
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").filter(artist=artist)
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").filter(artist=artist)
 
         return JsonResponse(list(concert), safe=False)
     except KeyError:
@@ -99,7 +99,11 @@ def update_concert(request, concertId):
         description = request_concert['description']
         duration = int(request_concert['duration'])
         artistId = int(request_concert['artist'])
+        state = int(request_concert['state'])
         startDateTime = parse_datetime(request_concert['startDateTime'])
+
+        if state not in Concert.ConcertState.values:
+            return JsonResponse({"message": "Invalid state"}, status=400)
 
         concert = Concert.objects.get(pk=concertId)
         artist = Artist.objects.get(pk=artistId)
@@ -109,6 +113,7 @@ def update_concert(request, concertId):
         concert.duration = duration
         concert.startDateTime = startDateTime
         concert.artist = artist
+        concert.state = state
         concert.save()
 
         return JsonResponse({"message": "Successfully updated concert"})
@@ -129,7 +134,7 @@ def read_all(request):
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
         concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").all()
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").all()
 
         return JsonResponse(list(concerts), safe=False)
     except KeyError:
@@ -146,7 +151,7 @@ def suggestions(request):
 
         suggestions_count = int(request.GET.get("count", 5))
         all_concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").all()
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").all()
         random_items = random.sample(list(all_concerts), suggestions_count)
 
         return JsonResponse(random_items, safe=False)
