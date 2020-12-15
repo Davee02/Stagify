@@ -1,7 +1,9 @@
 import json
 from django.http.response import JsonResponse
+from django.urls.conf import path
 from django.views.decorators.http import require_http_methods
 from ..models import Artist
+
 
 @require_http_methods(["POST"])
 def create_artist(request):
@@ -21,3 +23,8 @@ def create_artist(request):
         return JsonResponse({"message": "Malformed data!"}, status=400)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
+
+urlpatterns = [
+    path('artists/', create_artist, name='create artist'),
+]

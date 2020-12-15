@@ -1,6 +1,7 @@
 import json
 import random
 from django.http.response import JsonResponse
+from django.urls.conf import path
 from django.utils.dateparse import parse_datetime
 from django.views.decorators.http import require_http_methods
 from ..models import Artist, Concert
@@ -155,3 +156,15 @@ def set_artwork(request, concertId):
         return JsonResponse({"message": 'The specified concert does not exist'}, status=404)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
+
+urlpatterns = [
+    path('concerts/', index,
+         name='index endpoint - create new concert or list all'),
+    path('concerts/suggestions', suggestions,
+         name='concert suggestions for user'),
+    path('concerts/<int:concertId>', concert_id,
+         name='read or update concert'),
+    path('concerts/<int:concertId>/artwork',
+         set_artwork, name='set concert artwork')
+]

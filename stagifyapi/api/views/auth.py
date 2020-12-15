@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.urls.conf import path
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 import json
@@ -75,3 +76,11 @@ def userInfo(request):
         return JsonResponse(response)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
+
+urlpatterns = [
+    path('user/register', register, name='register'),
+    path('user/login', logIn, name='login'),
+    path('user/logout', logOut, name='logout'),
+    path('user/', userInfo, name='userinfo')
+]
