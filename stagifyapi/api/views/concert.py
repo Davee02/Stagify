@@ -69,6 +69,24 @@ def read_concert(request, concertId):
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
+@require_http_methods(["GET"])
+def by_artist(request, artistId):
+    try:
+        if not request.user.is_authenticated:
+            return JsonResponse({"message": 'Unauthorized'}, status=401)
+
+        artist = Artist.objects.get(pk=artistId)
+        concert = Concert.objects.values(
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").filter(artist=artist)
+
+        return JsonResponse(list(concert), safe=False)
+    except KeyError:
+        return JsonResponse({"message": "Malformed data!"}, status=400)
+    except Artist.DoesNotExist:
+        return JsonResponse({"message": 'The specified artist does not exist'}, status=404)
+    except Exception as e:
+        return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
 
 @require_http_methods(["PUT"])
 def update_concert(request, concertId):
@@ -165,6 +183,8 @@ urlpatterns = [
          name='concert suggestions for user'),
     path('concerts/<int:concertId>', concert_id,
          name='read or update concert'),
+    path('concerts/artist/<int:artistId>', by_artist,
+         name='read concerts by artist'),
     path('concerts/<int:concertId>/artwork',
          set_artwork, name='set concert artwork')
 ]
