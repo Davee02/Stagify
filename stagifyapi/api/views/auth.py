@@ -6,6 +6,12 @@ from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 import json
 
+@require_http_methods(["GET", "PUT"])
+def index(request):
+    if request.method == "PUT":
+        return update_info(request)
+    elif request.method == "GET":
+        return userInfo(request)
 
 @require_http_methods(["POST"])
 def register(request):
@@ -30,6 +36,35 @@ def register(request):
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
+@require_http_methods(["PUT"])
+def update_info(request):
+    try:
+        if not request.user.is_authenticated:
+            return JsonResponse({"message": 'Unauthorized'}, status=401)
+
+        request_user = json.loads(request.body)
+        username = request_user['username']
+        email = request_user['email']
+        password = request_user['password']
+        firstname = request_user['firstname']
+        lastname = request_user['lastname']
+
+        user = User.objects.get(username=request.user.username)
+        user.set_password(password)
+        user.username=username
+        user.email=email
+        user.first_name=firstname
+        user.last_name=lastname
+
+        user.save()
+
+        return JsonResponse({"message": "Successfully changed user info"})
+    except KeyError:
+        return JsonResponse({"message": "Malformed data!"}, status=400)
+    except IntegrityError as e:
+        return JsonResponse({"message": "An user with the same username already exists"}, status=409)
+    except Exception as e:
+        return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
 @require_http_methods(["POST"])
 def logIn(request):
@@ -82,5 +117,5 @@ urlpatterns = [
     path('user/register', register, name='register'),
     path('user/login', logIn, name='login'),
     path('user/logout', logOut, name='logout'),
-    path('user/', userInfo, name='userinfo')
+    path('user/', index, name='get or update userinfo')
 ]
