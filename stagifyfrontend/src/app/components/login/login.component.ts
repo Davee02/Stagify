@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar'
 import LoginViewModel from 'src/app/models/ViewModels/login.viewmodel';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -11,29 +12,31 @@ import LoginViewModel from 'src/app/models/ViewModels/login.viewmodel';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  username:string;
-  password:string;
+  loginForm:FormGroup;
+
   constructor(
     private userService:UserService, 
     private router:Router,
-    private snackBar:MatSnackBar) { }
+    private snackBar:MatSnackBar,
+    private formBuilder:FormBuilder,) {
+      this.loginForm = this.formBuilder.group({
+        username: new FormControl(''),
+        password: new FormControl('')
+      });
+    }
 
   ngOnInit(): void {
   }
 
-  login(){
-    this.userService.login({username:this.username, password:this.password})
-      .subscribe(
-        (value:HttpResponse<any>)=>{
-          if(value.ok){
-            this.snackBar.open('Login erfolgreich')
-            this.router.navigate(['/home'])
-          }
-        },
-        error=>{
-          this.snackBar.open('Login fehlgeschlagen')
-        }
-      )
+
+
+  async login(loginData: LoginViewModel){
+    var response = await this.userService.login(loginData);
+    debugger
+    if(response.ok){
+      this.snackBar.open('Login Succeeded');
+      this.router.navigate(['home'])
+    }
   }
 
 }

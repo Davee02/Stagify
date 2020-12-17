@@ -13,31 +13,30 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class RegisterComponent implements OnInit {  
   registerForm:FormGroup;
+
   constructor(
     private userService:UserService, 
     private formBuilder:FormBuilder,
     private snackBar:MatSnackBar,
     private router:Router
     ) { 
-    this.registerForm = this.formBuilder.group(RegisterViewModel);
+    this.registerForm = this.formBuilder.group({
+      username: new FormControl(''),
+      email: new FormControl(''),
+      password: new FormControl('')
+    });
   }
 
   ngOnInit(): void {
   }
 
-  register(registerData:RegisterViewModel){
-    this.userService.register(registerData)
-    .subscribe(
-      (data:HttpResponse<any>) => {
-          if(data.ok){
-            this.snackBar.open('Registered Successfully');
-            this.router.navigate(['/home'])
-          }
-      },
-      (error)=>{
-        this.snackBar.open('Beim regisitrieren ist ein Fehler aufgetreten. Bitte versuche es erneut.')
-        this.registerForm.reset();
-      }
-    )
+  async register(registerData){
+    var response = await this.userService.register(registerData);
+    if(response.ok){
+      this.snackBar.open('Register Succeeded');
+      this.router.navigate(['login']);
+    }else{
+      this.snackBar.open('Register failed something must be wrong, please try again');
+    }
   }
 }
