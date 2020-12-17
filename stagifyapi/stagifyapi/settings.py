@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'q+@9+9br!&gal37kganb367-9!+tra4(4g68^gdwm99pc&ja-^')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('IS_DEBUG', 'TRUE') == 'TRUE'
 
 ALLOWED_HOSTS = ['*']
 
@@ -20,14 +20,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'corsheaders',
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
+    "storages"
 ]
 
 MIDDLEWARE = [
@@ -35,7 +34,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -119,8 +117,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
-STATIC_URL = '/static/'
+AZURE_CONTAINER = os.environ.get('AZURE_MEDIA_STORAGE_CONTAINER', 'container for media storage on azure')
+AZURE_CONNECTION_STRING = os.environ.get('AZURE_MEDIA_STORAGE_CONNECTION_STRING', 'connection string for media storage on azure')
