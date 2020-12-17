@@ -11,7 +11,7 @@ import { ConcertItemComponent } from './components/concert-item/concert-item.com
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OverlayModule, OVERLAY_PROVIDERS } from '@angular/cdk/overlay';
 
@@ -27,6 +27,8 @@ import { OverlayModule, OVERLAY_PROVIDERS } from '@angular/cdk/overlay';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
