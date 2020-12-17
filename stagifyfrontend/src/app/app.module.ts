@@ -13,7 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { OverlayModule, OVERLAY_PROVIDERS } from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
