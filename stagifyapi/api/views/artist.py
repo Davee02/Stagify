@@ -69,7 +69,7 @@ def set_avatar(request):
     except KeyError:
         return JsonResponse({"message": "Malformed data!"}, status=400)
     except Artist.DoesNotExist:
-        return JsonResponse({"message": 'Unauthorized'}, status=401)
+        return JsonResponse({"message": 'Unauthorized, you are not an artist'}, status=401)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
@@ -94,7 +94,7 @@ def update_artist(request):
     except KeyError:
         return JsonResponse({"message": "Malformed data!"}, status=400)
     except Artist.DoesNotExist:
-        return JsonResponse({"message": 'Unauthorized'}, status=401)
+        return JsonResponse({"message": 'Unauthorized, you are not an artist'}, status=401)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 

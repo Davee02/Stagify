@@ -19,10 +19,6 @@ class Artist(models.Model):
 
 class Concert(models.Model):
 
-    class ConcertState(models.IntegerChoices):
-        WAITING = 0
-        RUNNING = 1
-
     displayname = models.CharField(max_length=500)
     description = models.CharField(max_length=10000)
     artwork = models.FileField(
@@ -30,5 +26,3 @@ class Concert(models.Model):
     startDateTime = models.DateTimeField()
     duration = models.PositiveIntegerField()
     artist = models.ForeignKey(Artist, on_delete=models.DO_NOTHING)
-    state = models.IntegerField(
-        choices=ConcertState.choices, default=ConcertState.WAITING)

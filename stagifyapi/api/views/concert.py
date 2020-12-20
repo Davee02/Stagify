@@ -1,5 +1,6 @@
 import json
 import random
+from django.contrib.auth.models import User
 from django.http.response import JsonResponse
 from django.urls.conf import path
 from django.utils.dateparse import parse_datetime
@@ -30,14 +31,14 @@ def create_concert(request):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
+        user = User.objects.get(username=request.user.username)   
+        artist = Artist.objects.get(userId=user)
+
         request_concert = json.loads(request.body)
         displayname = request_concert['displayname']
         description = request_concert['description']
         duration = int(request_concert['duration'])
-        artistId = int(request_concert['artist'])
         startDateTime = parse_datetime(request_concert['startDateTime'])
-
-        artist = Artist.objects.get(pk=artistId)
 
         newConcert = Concert(displayname=displayname, description=description,
                              duration=duration, startDateTime=startDateTime, artist=artist)
@@ -47,7 +48,7 @@ def create_concert(request):
     except KeyError:
         return JsonResponse({"message": "Malformed data!"}, status=400)
     except Artist.DoesNotExist:
-        return JsonResponse({"message": 'The specified artist does not exist'}, status=404)
+        return JsonResponse({"message": 'Unauthorized, you are not an artist'}, status=401)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
@@ -88,21 +89,23 @@ def update_concert(request, concertId):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
+        user = User.objects.get(username=request.user.username)   
+        artist = Artist.objects.get(userId=user)
+
         request_concert = json.loads(request.body)
         displayname = request_concert['displayname']
         description = request_concert['description']
         duration = int(request_concert['duration'])
-        artistId = int(request_concert['artist'])
         startDateTime = parse_datetime(request_concert['startDateTime'])
 
         concert = Concert.objects.get(pk=concertId)
-        artist = Artist.objects.get(pk=artistId)
+        if not concert.artist.id == artist.id:
+            return JsonResponse({"message": 'Unauthorized, this concert does not belong to you'}, status=401)
 
         concert.displayname = displayname
         concert.description = description
         concert.duration = duration
         concert.startDateTime = startDateTime
-        concert.artist = artist
         concert.save()
 
         return JsonResponse({"message": "Successfully updated concert"})
@@ -111,7 +114,7 @@ def update_concert(request, concertId):
     except Concert.DoesNotExist:
         return JsonResponse({"message": 'The specified concert does not exist'}, status=404)
     except Artist.DoesNotExist:
-        return JsonResponse({"message": 'The specified artist does not exist. No changes were made'}, status=404)
+        return JsonResponse({"message": 'Unauthorized, you are not an artist'}, status=401)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
@@ -153,7 +156,13 @@ def set_artwork(request, concertId):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
+        user = User.objects.get(username=request.user.username)   
+        artist = Artist.objects.get(userId=user)
+
         concert = Concert.objects.get(pk=concertId)
+        if not concert.artist.id == artist.id:
+            return JsonResponse({"message": 'Unauthorized, this concert does not belong to you'}, status=401)
+
         concert.artwork = request.FILES["artwork"]
         concert.artwork.name = '%s%s' % (uuid.uuid4(), concert.artwork.name)
         concert.save()
@@ -163,6 +172,8 @@ def set_artwork(request, concertId):
         return JsonResponse({"message": "Malformed data!"}, status=400)
     except Concert.DoesNotExist:
         return JsonResponse({"message": 'The specified concert does not exist'}, status=404)
+    except Artist.DoesNotExist:
+        return JsonResponse({"message": 'Unauthorized, you are not an artist'}, status=401)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
