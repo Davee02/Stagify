@@ -2,7 +2,11 @@
 
 ## Development
 
+We recommend using the code editor [Visual Studio Code](https://code.visualstudio.com/) for developing and debugging Stagify.
+After you opened the root folder of the project in Visual Studio Code install all the recommended extensions. You don't need to tweak additional settings because we're using the defaults.
+
 The following softwares are required to run Stagify locally:
+
 - [Python 3](https://www.python.org/downloads/)
 - [Node.js](https://nodejs.org/en/)
 - [Docker](https://www.docker.com/)
