@@ -55,9 +55,6 @@ def create_concert(request):
 @require_http_methods(["GET"])
 def read_concert(request, concertId):
     try:
-        if not request.user.is_authenticated:
-            return JsonResponse({"message": 'Unauthorized'}, status=401)
-
         concert = Concert.objects.values(
             "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").get(pk=concertId)
 
@@ -72,9 +69,6 @@ def read_concert(request, concertId):
 @require_http_methods(["GET"])
 def by_artist(request, artistId):
     try:
-        if not request.user.is_authenticated:
-            return JsonResponse({"message": 'Unauthorized'}, status=401)
-
         artist = Artist.objects.get(pk=artistId)
         concert = Concert.objects.values(
             "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").filter(artist=artist)
@@ -130,9 +124,6 @@ def update_concert(request, concertId):
 @require_http_methods(["GET"])
 def read_all(request):
     try:
-        if not request.user.is_authenticated:
-            return JsonResponse({"message": 'Unauthorized'}, status=401)
-
         concerts = Concert.objects.values(
             "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").all()
 
