@@ -56,7 +56,7 @@ def create_concert(request):
 def read_concert(request, concertId):
     try:
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").get(pk=concertId)
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").get(pk=concertId)
 
         return JsonResponse(concert, safe=False)
     except KeyError:
@@ -71,7 +71,7 @@ def by_artist(request, artistId):
     try:
         artist = Artist.objects.get(pk=artistId)
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").filter(artist=artist)
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").filter(artist=artist)
 
         return JsonResponse(list(concert), safe=False)
     except KeyError:
@@ -93,11 +93,7 @@ def update_concert(request, concertId):
         description = request_concert['description']
         duration = int(request_concert['duration'])
         artistId = int(request_concert['artist'])
-        state = int(request_concert['state'])
         startDateTime = parse_datetime(request_concert['startDateTime'])
-
-        if state not in Concert.ConcertState.values:
-            return JsonResponse({"message": "Invalid state"}, status=400)
 
         concert = Concert.objects.get(pk=concertId)
         artist = Artist.objects.get(pk=artistId)
@@ -107,7 +103,6 @@ def update_concert(request, concertId):
         concert.duration = duration
         concert.startDateTime = startDateTime
         concert.artist = artist
-        concert.state = state
         concert.save()
 
         return JsonResponse({"message": "Successfully updated concert"})
@@ -125,7 +120,7 @@ def update_concert(request, concertId):
 def read_all(request):
     try:
         concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").all()
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").all()
 
         return JsonResponse(list(concerts), safe=False)
     except KeyError:
@@ -142,7 +137,7 @@ def suggestions(request):
 
         suggestions_count = int(request.GET.get("count", 5))
         all_concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist", "state").all()
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").all()
         random_items = random.sample(list(all_concerts), suggestions_count)
 
         return JsonResponse(random_items, safe=False)
@@ -152,7 +147,7 @@ def suggestions(request):
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
 
-@require_http_methods(["PUT"])
+@require_http_methods(["POST"])
 def set_artwork(request, concertId):
     try:
         if not request.user.is_authenticated:
