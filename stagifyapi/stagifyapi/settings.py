@@ -1,5 +1,6 @@
 from pathlib import Path
-import os;
+import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,10 +81,12 @@ DATABASES = {
         'PORT':  os.environ.get('DATABASE_PORT', '5433'),
         'OPTIONS': {
             'sslmode': os.environ.get('DATABASE_SSL_MODE', 'allow')
-        },
+        }
     }
 }
 
+if 'test' in sys.argv:
+    DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
