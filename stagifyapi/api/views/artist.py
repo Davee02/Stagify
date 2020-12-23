@@ -17,6 +17,7 @@ def index(request):
     elif request.method == "GET":
         return read_all(request)
 
+
 @require_http_methods(["POST"])
 def create_artist(request):
     try:
@@ -30,7 +31,8 @@ def create_artist(request):
 
         user = User.objects.get(id=userId)
 
-        newArtist = Artist(displayname=displayname, description=description, userId=user)
+        newArtist = Artist(displayname=displayname,
+                           description=description, userId=user)
         newArtist.save()
 
         return JsonResponse({"message": "Successfully created artist"})
@@ -41,6 +43,7 @@ def create_artist(request):
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
+
 @require_http_methods(["GET"])
 def read_all(request):
     try:
@@ -48,10 +51,9 @@ def read_all(request):
             "id", "displayname", "description", "avatar").all()
 
         return JsonResponse(list(artists), safe=False)
-    except KeyError:
-        return JsonResponse({"message": "Malformed data!"}, status=400)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
 
 @require_http_methods(["POST"])
 def set_avatar(request):
@@ -59,7 +61,7 @@ def set_avatar(request):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
-        user = User.objects.get(username=request.user.username)        
+        user = User.objects.get(username=request.user.username)
         artist = Artist.objects.get(userId=user)
         artist.avatar = request.FILES["avatar"]
         artist.avatar.name = '%s%s' % (uuid.uuid4(), artist.avatar.name)
@@ -72,6 +74,7 @@ def set_avatar(request):
         return JsonResponse({"message": 'Unauthorized, you are not an artist'}, status=401)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
 
 @require_http_methods(["PUT"])
 def update_artist(request):
@@ -98,6 +101,7 @@ def update_artist(request):
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
+
 @require_http_methods(["GET"])
 def read_artist(request, artistId):
     try:
@@ -105,12 +109,11 @@ def read_artist(request, artistId):
             "id", "displayname", "description", "avatar").get(pk=artistId)
 
         return JsonResponse(artists, safe=False)
-    except KeyError:
-        return JsonResponse({"message": "Malformed data!"}, status=400)
     except Artist.DoesNotExist:
         return JsonResponse({"message": 'The specified artist does not exist'}, status=404)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
 
 @require_http_methods(["GET"])
 def by_searchterm(request, searchTerm):
@@ -119,18 +122,17 @@ def by_searchterm(request, searchTerm):
             "id", "displayname", "description", "avatar").filter(Q(displayname__icontains=searchTerm) | Q(description__icontains=searchTerm))
 
         return JsonResponse(list(artists), safe=False)
-    except KeyError:
-        return JsonResponse({"message": "Malformed data!"}, status=400)
     except Artist.DoesNotExist:
         return JsonResponse({"message": 'The specified artist does not exist'}, status=404)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
+
 urlpatterns = [
     path('artists/', index, name='create, update or read artists'),
     path('artists/avatar', set_avatar, name='set avatar'),
     path('artists/<int:artistId>', read_artist,
-        name='read artist'),
+         name='read artist'),
     path('artists/search/<searchTerm>', by_searchterm,
-        name='search for artist'),
+         name='search for artist'),
 ]
