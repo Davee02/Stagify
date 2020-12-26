@@ -18,7 +18,6 @@ class Artist(models.Model):
 
 
 class Concert(models.Model):
-
     displayname = models.CharField(max_length=500)
     description = models.CharField(max_length=10000)
     artwork = models.FileField(
