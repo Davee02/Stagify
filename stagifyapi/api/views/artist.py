@@ -43,9 +43,8 @@ def create_artist(request):
 
         user = User.objects.get(id=userId)
 
-        newArtist = Artist(displayname=displayname,
+        Artist.objects.create(displayname=displayname,
                            description=description, userId=user)
-        newArtist.save()
 
         return JsonResponse({"message": "Successfully created artist"})
     except KeyError:

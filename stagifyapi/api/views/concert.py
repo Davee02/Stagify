@@ -60,16 +60,15 @@ def create_concert(request):
         displayname = request_concert['displayname']
         description = request_concert['description']
 
-        concert_valid, validation_error = validate_concert(displayname, description, duration = int(request_concert['duration'], request_concert['startDateTime']))
+        concert_valid, validation_error = validate_concert(displayname, description, request_concert['duration'], request_concert['startDateTime'])
         if not concert_valid:
             return JsonResponse({"message": validation_error}, status=400)
 
         duration = int(request_concert['duration'])
         startDateTime = parse_datetime(request_concert['startDateTime'])
 
-        newConcert = Concert(displayname=displayname, description=description,
+        Concert.objects.create(displayname=displayname, description=description,
                              duration=duration, startDateTime=startDateTime, artist=artist)
-        newConcert.save()
 
         return JsonResponse({"message": "Successfully created concert"})
     except KeyError:
@@ -123,7 +122,7 @@ def update_concert(request, concertId):
         displayname = request_concert['displayname']
         description = request_concert['description']
 
-        concert_valid, validation_error = validate_concert(displayname, description, duration = int(request_concert['duration'], request_concert['startDateTime']))
+        concert_valid, validation_error = validate_concert(displayname, description, request_concert['duration'], request_concert['startDateTime'])
         if not concert_valid:
             return JsonResponse({"message": validation_error}, status=400)
 
