@@ -8,6 +8,28 @@ from django.views.decorators.http import require_http_methods
 from ..models import Artist, Concert
 import uuid
 
+def validate_concert(displayname, description, duration, startDateTime):
+    if not displayname:
+        return False, "Displayname must not be empty"
+
+    if not description:
+        return False, "Description must not be empty"
+
+    try:
+        parsed_duration = int(duration)
+        if parsed_duration < 1:
+            return False, "Duration must be greater than 0"
+    except ValueError:
+        return False, "Duration must be a valid number"
+
+    try:
+        parsed_startDateTime = parse_datetime(startDateTime)
+        if parsed_startDateTime is None:
+            return False, "StartDateTime must be a valid datetime in the format 'yyyy-MM-ddTHH\:mm\:ss' (2008-09-22T13:57:31)"
+    except ValueError:
+        return False, "StartDateTime must be a valid datetime in the format 'yyyy-MM-ddTHH\:mm\:ss' (2008-09-22T13:57:31)"
+
+    return True, None
 
 @require_http_methods(["GET", "POST"])
 def index(request):
@@ -37,6 +59,11 @@ def create_concert(request):
         request_concert = json.loads(request.body)
         displayname = request_concert['displayname']
         description = request_concert['description']
+
+        concert_valid, validation_error = validate_concert(displayname, description, duration = int(request_concert['duration'], request_concert['startDateTime']))
+        if not concert_valid:
+            return JsonResponse({"message": validation_error}, status=400)
+
         duration = int(request_concert['duration'])
         startDateTime = parse_datetime(request_concert['startDateTime'])
 
@@ -95,6 +122,11 @@ def update_concert(request, concertId):
         request_concert = json.loads(request.body)
         displayname = request_concert['displayname']
         description = request_concert['description']
+
+        concert_valid, validation_error = validate_concert(displayname, description, duration = int(request_concert['duration'], request_concert['startDateTime']))
+        if not concert_valid:
+            return JsonResponse({"message": validation_error}, status=400)
+
         duration = int(request_concert['duration'])
         startDateTime = parse_datetime(request_concert['startDateTime'])
 

@@ -7,6 +7,14 @@ from django.views.decorators.http import require_http_methods
 from ..models import Artist
 import uuid
 
+def validate_artist(displayname, description):
+    if not displayname:
+        return False, "Displayname must not be empty"
+
+    if not description:
+        return False, "Description must not be empty"
+
+    return True, None
 
 @require_http_methods(["GET", "POST", "PUT"])
 def index(request):
@@ -28,6 +36,10 @@ def create_artist(request):
         displayname = request_artist['displayname']
         description = request_artist['description']
         userId = int(request_artist['userId'])
+
+        artist_valid, validation_error = validate_artist(displayname, description)
+        if not artist_valid:
+            return JsonResponse({"message": validation_error}, status=400)
 
         user = User.objects.get(id=userId)
 
@@ -85,6 +97,10 @@ def update_artist(request):
         request_artist = json.loads(request.body)
         displayname = request_artist['displayname']
         description = request_artist['description']
+
+        artist_valid, validation_error = validate_artist(displayname, description)
+        if not artist_valid:
+            return JsonResponse({"message": validation_error}, status=400)
 
         user = User.objects.get(username=request.user.username)
         artist = Artist.objects.get(userId=user)

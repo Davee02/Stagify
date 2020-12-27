@@ -6,6 +6,30 @@ from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 import json
 
+def validate_userinfo(username, email, password, firstname, lastname):
+    if not username:
+        return False, "Username must not be empty"
+
+    if not email:
+        return False, "Email must not be empty"
+
+    if not "@" in email:
+        return False, "Email must be a valid email address"
+
+    if not password:
+        return False, "Password must not be empty"
+
+    if len(password) < 8:
+        return False, "Password must be at least 8 characters long"
+
+    if not firstname:
+        return False, "Firstname must not be empty"
+
+    if not lastname:
+        return False, "Lastname must not be empty"
+
+    return True, None
+
 @require_http_methods(["GET", "PUT"])
 def index(request):
     if request.method == "PUT":
@@ -22,6 +46,10 @@ def register(request):
         password = request_user['password']
         firstname = request_user['firstname']
         lastname = request_user['lastname']
+
+        userinfo_valid, validation_error = validate_userinfo(username, email, password, firstname, lastname)
+        if not userinfo_valid:
+            return JsonResponse({"message": validation_error}, status=400)
 
         user = User.objects.create_user(
             username, email, password, first_name=firstname, last_name=lastname)
@@ -48,6 +76,10 @@ def update_info(request):
         password = request_user['password']
         firstname = request_user['firstname']
         lastname = request_user['lastname']
+
+        userinfo_valid, validation_error = validate_userinfo(username, email, password, firstname, lastname)
+        if not userinfo_valid:
+            return JsonResponse({"message": validation_error}, status=400)
 
         user = User.objects.get(username=request.user.username)
         user.set_password(password)
