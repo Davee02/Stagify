@@ -169,9 +169,14 @@ def suggestions(request):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
-        suggestions_count = int(request.GET.get("count", 5))
+        suggestions_count = int(request.GET.get("count", 5))      
         all_concerts = Concert.objects.values(
             "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").all()
+
+        concerts_count = Concert.objects.count()
+        if(suggestions_count > concerts_count):
+            suggestions_count = concerts_count
+
         random_items = random.sample(list(all_concerts), suggestions_count)
 
         return JsonResponse(random_items, safe=False)

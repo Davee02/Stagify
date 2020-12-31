@@ -105,3 +105,13 @@ class ConcertTest(TestCase):
         self.assertTrue(login)
         self.assertEqual(len(response_object), 7)
         self.assertEqual(response.status_code, 200)
+
+    def test_get_suggestions_with_too_big_amount_concerts_returns_all_concerts_and_200_ok(self):
+        login = self.client.login(username='normaluser', password='normaluser')
+
+        response = self.client.get("/api/concerts/suggestions?count=100")
+        response_object = json.loads(response.content)
+
+        self.assertTrue(login)
+        self.assertEqual(len(response_object), 9)
+        self.assertEqual(response.status_code, 200)
