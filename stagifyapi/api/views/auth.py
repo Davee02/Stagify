@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.urls.conf import path
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
+from ..models import Artist
 import json
 
 def validate_userinfo(username, email, password, firstname, lastname):
@@ -137,8 +138,17 @@ def userInfo(request):
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
         user = request.user
+
+        artist_id = 0
+
+        try:
+            artist = Artist.objects.get(userId=user)
+            artist_id = artist.id
+        except Artist.DoesNotExist:
+            artist_id = None
+
         response = {"id": user.id, "email": user.email,
-                    "username": user.username, "firstname": user.first_name, "lastname": user.last_name}
+                    "username": user.username, "firstname": user.first_name, "lastname": user.last_name, "artistId": artist_id}
 
         return JsonResponse(response)
     except Exception as e:
