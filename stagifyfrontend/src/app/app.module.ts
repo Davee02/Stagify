@@ -17,6 +17,10 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { UserComponent } from './components/user/user.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ArtistItemComponent } from './components/artist-item/artist-item.component';
+import { ArtistTestHostComponentComponent } from './components/test/artist-test-host-component/artist-test-host-component.component';
+import { ConcertTestHostComponentComponent } from './components/test/concert-test-host-component/concert-test-host-component.component';
+import { ConcertTestHostComponent } from './components/test/concert-test-host/concert-test-host.component';
+import { ArtistTestHostComponent } from './components/test/artist-test-host/artist-test-host.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { ArtistItemComponent } from './components/artist-item/artist-item.compon
     LoginComponent,
     RegisterComponent,
     UserComponent,
-    ArtistItemComponent
+    ArtistItemComponent,
+    ArtistTestHostComponentComponent,
+    ConcertTestHostComponentComponent,
+    ConcertTestHostComponent,
+    ArtistTestHostComponent
   ],
   imports: [
     BrowserModule,
