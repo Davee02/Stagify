@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent implements OnInit {
-
+  searchForm:FormGroup;
   constructor(private formBuilder: FormBuilder, private router:Router) {
-    formBuilder.group({
+    this.searchForm = formBuilder.group({
       searchBar: new FormControl('')
     });
    }
@@ -20,8 +20,8 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  search(value:string){
-    this.router.navigate(['search', {value: value}], )
+  search(value){
+    this.router.navigate(['search', {value: value.value}], )
   }
 
 }
