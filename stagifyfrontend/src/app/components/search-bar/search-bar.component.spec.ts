@@ -1,5 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { SearchBarComponent } from './search-bar.component';
 
@@ -10,7 +12,11 @@ describe('SearchBarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports:[
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      providers:[
+        FormBuilder
       ],
       declarations: [ SearchBarComponent ]
     })

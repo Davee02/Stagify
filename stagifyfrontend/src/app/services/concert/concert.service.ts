@@ -11,7 +11,7 @@ import CreateConcertViewModel from '../../models/ViewModels/create-concert.viewm
 })
 export class ConcertService {
   apiUrl:string = environment.apiUrl;
-  constructor(private httpClient:HttpClient, private router:Router) { }
+  constructor(private httpClient:HttpClient) { }
   
   async getUpcomingConcerts(numberOfSuggestions:number): Promise< Array<ConcertModel>>{
     return this.httpClient
