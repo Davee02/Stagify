@@ -34,13 +34,6 @@ class ConcertTest(TestCase):
         self.assertEqual(response_object["message"], "Unauthorized")
         self.assertEqual(response.status_code, 401)
 
-    def test_get_suggestions_with_no_user_returns_401_unauthorized(self):
-        response = self.client.get("/api/concerts/suggestions")
-        response_object = json.loads(response.content)
-
-        self.assertEqual(response_object["message"], "Unauthorized")
-        self.assertEqual(response.status_code, 401)
-
     def test_set_artwork_with_no_user_returns_401_unauthorized(self):
         response = self.client.post("/api/concerts/1/artwork")
         response_object = json.loads(response.content)
