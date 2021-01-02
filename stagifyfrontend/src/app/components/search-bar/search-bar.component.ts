@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder, private router:Router) {
+    formBuilder.group({
+      searchBar: new FormControl('')
+    });
+   }
 
+
+  
   ngOnInit(): void {
+  }
+
+  search(value:string){
+    this.router.navigate(['search', {value: value}], )
   }
 
 }

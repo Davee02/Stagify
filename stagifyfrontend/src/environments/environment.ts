@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: "https://stagifyapi.azurewebsites.net/api"
+  apiUrl: "http://localhost:8000/api"
 };

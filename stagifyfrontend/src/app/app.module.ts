@@ -12,8 +12,10 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { UserComponent } from './components/user/user.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     SearchBarComponent,
     ConcertItemComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,12 @@ import { OverlayModule } from '@angular/cdk/overlay';
     BrowserAnimationsModule,
     OverlayModule
   ],
-  providers: [FormBuilder, MatSnackBar],
+  providers: [
+    FormBuilder,
+    MatSnackBar,
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
+    CookieService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

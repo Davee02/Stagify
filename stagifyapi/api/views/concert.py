@@ -166,8 +166,6 @@ def read_all(request):
 @require_http_methods(["GET"])
 def suggestions(request):
     try:
-        if not request.user.is_authenticated:
-            return JsonResponse({"message": 'Unauthorized'}, status=401)
 
         suggestions_count = int(request.GET.get("count", 5))      
         all_concerts = Concert.objects.values(

@@ -12,7 +12,6 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const res = await this.httpClient.get(`${environment.apiUrl}/`).toPromise();
   }
 
 

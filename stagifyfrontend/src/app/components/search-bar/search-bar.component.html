@@ -1,3 +1,3 @@
-<form>
-    <input type="text" placeholder="Search" class="search-field"/>
+<form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+    <input type="text" placeholder="Search" formControlName="searchBar" class="search-field"/>
 </form>

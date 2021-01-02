@@ -16,9 +16,10 @@ export class HomeComponent implements OnInit {
     this.getConcerts();
   }
 
-  getConcerts():void{
-    this.concertService
-      .getUpcomingConcerts()
-      .subscribe((data: Array<ConcertModel>) => this.concerts = data);
+  async getConcerts(){
+    this.concertService.getUpcomingConcerts(10)
+    .then(value => this.concerts = value)
+    .catch(error => {});
   }
+
 }

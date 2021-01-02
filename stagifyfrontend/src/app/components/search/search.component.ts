@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import ConcertModel from 'src/app/models/concert.model';
+import { ConcertService } from 'src/app/services/concert/concert.service';
 
 @Component({
   selector: 'app-search',
@@ -6,10 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+  concerts: Array<ConcertModel>
+  constructor(private concertService:ConcertService,
+    private route:ActivatedRoute) { 
+    
+  }
 
-  constructor() { }
+  search(value:string){
+    this.concertService.
+  }
 
   ngOnInit(): void {
+    this.route.params.toPromise().then((value:Params) => this.search(value.get('value')));
   }
+
+  
 
 }
