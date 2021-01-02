@@ -6,15 +6,14 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
-  private apiUrl = environment.apiUrl;
-  constructor(private httpClient:HttpClient ) { }
+export class ArtistService {
+  apiUrl:string = environment.apiUrl
+  
+  constructor(private httpClient:HttpClient) { }
 
-  async searchArtists(value:string): Promise<Array<ArtistModel>>{
+  async allArtists(): Promise<Array<ArtistModel>>{
     return this.httpClient
-      .get<Array<ArtistModel>>(this.apiUrl + '/artists/search/' + value)
+      .get<Array<ArtistModel>>(this.apiUrl + '/artists')
       .toPromise()
-   }
-
-
+  }
 }

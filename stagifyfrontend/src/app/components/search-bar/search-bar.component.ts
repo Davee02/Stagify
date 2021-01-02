@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SearchBarComponent implements OnInit {
   searchForm:FormGroup;
-  constructor(formBuilder: FormBuilder, private router:Router) {
+  constructor(private formBuilder: FormBuilder, private router:Router) {
     this.searchForm = formBuilder.group({
       searchBar: new FormControl('')
     });
@@ -20,7 +20,9 @@ export class SearchBarComponent implements OnInit {
   }
 
   search(value){
-    this.router.navigate(['search', {value: value.value}], )
+    if(!(value == null || value == '')){
+      this.router.navigate(['artists/search'], {queryParams: {value: value.searchBar}});
+    }
   }
 
 }

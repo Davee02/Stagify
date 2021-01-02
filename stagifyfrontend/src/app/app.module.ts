@@ -16,6 +16,7 @@ import { MatSnackBar, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/sn
 import { OverlayModule } from '@angular/cdk/overlay';
 import { UserComponent } from './components/user/user.component';
 import { CookieService } from 'ngx-cookie-service';
+import { ArtistItemComponent } from './components/artist-item/artist-item.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CookieService } from 'ngx-cookie-service';
     ConcertItemComponent,
     LoginComponent,
     RegisterComponent,
-    UserComponent
+    UserComponent,
+    ArtistItemComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import ConcertModel from 'src/app/models/concert.model';
 
 @Component({
   selector: 'app-concert-item',
@@ -7,11 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ConcertItemComponent implements OnInit {
 
-  @Input() concertImagePath: string;
-  @Input() artistImagePath: string;
-  @Input() artistName: string;
-  @Input() concertName:string;
-  @Input() concertDate: Date;
+  @Input() concertModel: ConcertModel;
+
 
   constructor() { }
 

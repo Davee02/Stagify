@@ -1,1 +1,15 @@
-<p>search works!</p>
+<h1>
+    Suchergebnisse für '{{searchValue}}'
+</h1>
+
+<div *ngIf="isLoading; else loaded" >
+    loading...
+</div>
+<ng-template #loaded>
+    <div *ngIf="artists == null || artists.length == 0">
+        Keine Ergebnisse gefunden
+    </div>
+    <div *ngFor="let artist of artists">
+        <app-artist-item artistModel="{{artist}}"></app-artist-item>
+    </div>
+</ng-template>
