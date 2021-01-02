@@ -3,6 +3,7 @@ import random
 from django.contrib.auth.models import User
 from django.http.response import JsonResponse
 from django.urls.conf import path
+from django.db.models import F
 from django.utils.dateparse import parse_datetime
 from django.views.decorators.http import require_http_methods
 from ..models import Artist, Concert
@@ -83,7 +84,7 @@ def create_concert(request):
 def read_concert(request, concertId):
     try:
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").get(pk=concertId)
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).get(pk=concertId)
 
         return JsonResponse(concert, safe=False)
     except KeyError:
@@ -98,7 +99,7 @@ def by_artist(request, artistId):
     try:
         artist = Artist.objects.get(pk=artistId)
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").filter(artist=artist)
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).filter(artist=artist)
 
         return JsonResponse(list(concert), safe=False)
     except KeyError:
@@ -154,7 +155,7 @@ def update_concert(request, concertId):
 def read_all(request):
     try:
         concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").all()
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).all()
 
         return JsonResponse(list(concerts), safe=False)
     except KeyError:
@@ -169,7 +170,7 @@ def suggestions(request):
 
         suggestions_count = int(request.GET.get("count", 5))      
         all_concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", "artist").all()
+            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).all()
 
         concerts_count = Concert.objects.count()
         if(suggestions_count > concerts_count):
