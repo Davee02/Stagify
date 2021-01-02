@@ -16,7 +16,6 @@ export class SearchComponent implements OnInit {
   }
 
   search(value:string){
-    this.concertService.
   }
 
   ngOnInit(): void {
