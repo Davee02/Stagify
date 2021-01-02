@@ -16,4 +16,11 @@ export class ArtistService {
       .get<Array<ArtistModel>>(this.apiUrl + '/artists')
       .toPromise()
   }
+
+
+  async getArtist(id:number):Promise<ArtistModel>{
+    return this.httpClient
+    .get<ArtistModel>(this.apiUrl + '/artists/' + id)
+    .toPromise()
+  }
 }

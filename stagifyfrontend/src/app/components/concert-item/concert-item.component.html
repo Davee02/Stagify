@@ -1,10 +1,12 @@
-<div class="concert-container">
-    <img src="{{concertImagePath}}" class="concert-image">
-    <a href="/artists/{{artistName}}">
-        <img src="{{artistImagePath}}"/>
-    </a>
-    <div>
-        <p>{{concertName}}</p>
-        <p>{{concertDate}}</p>
+<div *ngIf="artistModel">
+    <div class="concert-container">
+        <img src="{{concertModel.artwork}}" class="concert-image">
+        <a href="/artists/{{artistModel.displayname}}">
+            <img src="{{artistModel.avatar}}" alt="artist image" class="artis-image-small"/>
+        </a>
+        <div>
+            <p>{{concertModel.displayname}}</p>
+            <p>{{concertModel.startDateTime}}</p>
+        </div>
     </div>
 </div>

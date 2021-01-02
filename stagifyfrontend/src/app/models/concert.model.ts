@@ -5,5 +5,5 @@ export default class ConcertModel{
     artwork: string;
     duration: number;
     startDateTime: Date;
-    artist: boolean;
+    artist: number;
 }
