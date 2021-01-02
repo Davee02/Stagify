@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { UserComponent } from './components/user/user.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ArtistItemComponent } from './components/artist-item/artist-item.component';
+import { WithCredentialsInterceptor } from './services/authentication/authentication/authentication.withcredentials.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,11 @@ import { ArtistItemComponent } from './components/artist-item/artist-item.compon
     MatSnackBar,
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}},
     CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: WithCredentialsInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

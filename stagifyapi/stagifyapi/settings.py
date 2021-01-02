@@ -129,6 +129,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 AZURE_CONTAINER = os.environ.get('AZURE_MEDIA_STORAGE_CONTAINER', 'container for media storage on azure')
 AZURE_CONNECTION_STRING = os.environ.get('AZURE_MEDIA_STORAGE_CONNECTION_STRING', 'connection string for media storage on azure')
 
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = os.environ.get('IS_DEBUG', 'TRUE') != 'TRUE'
 SESSION_COOKIE_HTTPONLY = False
-SESSION_COOKIE_SAMESITE = 'None'
+
+if os.environ.get('IS_DEBUG', 'TRUE') == 'TRUE':
+    SESSION_COOKIE_SAMESITE = 'Lax'
+else:
+    SESSION_COOKIE_SAMESITE = 'None'
