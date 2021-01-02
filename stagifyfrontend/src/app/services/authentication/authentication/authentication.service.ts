@@ -14,7 +14,7 @@ export class AuthenticationService {
   constructor(private httpClient:HttpClient, private cookieService:CookieService) { }
 
   isLoggedIn():boolean{
-      return this.cookieService.check('sessionid');
+      return this.cookieService.check('ARRAffinity');
   }
 
   async login(model:LoginViewModel):Promise<HttpResponse<any>>{
