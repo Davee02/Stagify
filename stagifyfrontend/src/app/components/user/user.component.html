@@ -3,9 +3,9 @@
 </div>
 <ng-template #loaded>
     <div *ngIf="userModel else error">
-        <div>{{userModel.username}}</div>
-        <div>{{userModel.lastname}}</div>
-        <div>{{userModel.firstname}}</div>
+        <div><b>Username: </b>{{userModel.username}}</div>
+        <div><b>Lastname: </b>{{userModel.lastname}}</div>
+        <div><b>Firstname: </b>{{userModel.firstname}}</div>
         <button (click)="logout()">Logout</button>
     </div>
 </ng-template>
