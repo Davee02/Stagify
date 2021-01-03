@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
   async login(loginData: LoginViewModel){
     var response = await this.authService.login(loginData);
     if(response.ok){
+      localStorage.setItem('isLoggedIn', '1')
       this.snackBar.open('Login Succeeded');
       if(this.afterSuccessfulLoginPath && this.afterSuccessfulLoginPath != ''){
         this.router.navigate([this.afterSuccessfulLoginPath])

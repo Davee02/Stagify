@@ -11,11 +11,12 @@ import {environment} from 'src/environments/environment'
 export class AuthenticationService {
 
   private apiUrl = environment.apiUrl;
+
   constructor(private httpClient:HttpClient, private cookieService:CookieService) { }
 
   isLoggedIn():boolean{
-    return  this.cookieService.check('sessionid');
-     
+    var item = localStorage.getItem('isLoggedIn');
+    return (item == '1');
   }
 
   async login(model:LoginViewModel):Promise<HttpResponse<any>>{
@@ -26,7 +27,7 @@ export class AuthenticationService {
         {
           headers: new HttpHeaders().set('Content-Type', 'application/json'),
           observe: 'response'
-        }).toPromise();
+        }).toPromise()
   }
 
   async register(model:RegisterViewModel):Promise<HttpResponse<any>>{
@@ -41,6 +42,7 @@ export class AuthenticationService {
   }
 
   async logout():Promise<HttpResponse<any>>{
+    localStorage.setItem('isLoggedIn', '0');
     return this.httpClient
       .post<any>(
         this.apiUrl + '/user/logout', { observe: 'response' }).toPromise();
