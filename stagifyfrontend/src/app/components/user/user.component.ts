@@ -12,14 +12,18 @@ import { UserService } from 'src/app/services/user/user.service';
 export class UserComponent implements OnInit {
   userModel:UserModel;
   isLoggedIn:boolean;
+  isLoading:boolean = true;
   constructor(private authService:AuthenticationService,
     private router:Router,
     private userServie:UserService) { 
       if(authService.isLoggedIn()){
         this.userServie.getLoggedInUser()
-        .then((value) => {this.userModel = value.body})
+        .then((value) => {
+          this.userModel = value.body
+          this.isLoading = false;
+        })
       }else{
-        router.navigate(['login']);
+        router.navigate(['login'], {queryParams: {successfulLoginPath: 'user'}});
       }
       
   }
@@ -27,14 +31,9 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
-
-  async logout(){
-    var res = await this.authService.logout();
-
-    if(res.ok){
-      this.router.navigate(['home']);
-    }
+  logout(){
+    this.authService.logout()
+    .then(value => this.router.navigate(["/home"])
+    .catch(err => {}));
   }
-
 }

@@ -3,9 +3,16 @@
         <img src="assets/dummy-logo.png" alt="logo" class="logo icon">
         <div class="user-search-container">
             <app-search-bar class="search-bar"></app-search-bar>
-            <a href="/user" class="user-link">
-                <img src="assets/usericon.png"  alt="user" class="user-icon icon"/>
-            </a>
+            <div *ngIf="authService.isLoggedIn(); else login">
+                <a href="/user" class="user-link">
+                    <img src="assets/usericon.png"  alt="user" class="user-icon icon"/>
+                </a>
+            </div>
+            <ng-template #login>
+                <a href="/login">
+                    Login
+                </a>
+            </ng-template>
         </div>
     </nav>
 </header>

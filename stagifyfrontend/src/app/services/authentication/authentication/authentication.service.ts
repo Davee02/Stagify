@@ -14,7 +14,8 @@ export class AuthenticationService {
   constructor(private httpClient:HttpClient, private cookieService:CookieService) { }
 
   isLoggedIn():boolean{
-      return this.cookieService.check('sessionid');
+    return  this.cookieService.check('sessionid');
+     
   }
 
   async login(model:LoginViewModel):Promise<HttpResponse<any>>{
@@ -42,12 +43,8 @@ export class AuthenticationService {
   async logout():Promise<HttpResponse<any>>{
     return this.httpClient
       .post<any>(
-        this.apiUrl + '/user/logout',
-        {
-          observe:'response'
-        }
-      ).toPromise();
-  }
+        this.apiUrl + '/user/logout', { observe: 'response' }).toPromise();
+    }
 }
 
 

@@ -10,6 +10,8 @@ import {ConcertService} from '../../services/concert/concert.service'
 })
 export class HomeComponent implements OnInit {
   concerts: Array<ConcertModel>;
+  isLoading:Boolean = true;
+
   constructor(private concertService:ConcertService) { }
 
   ngOnInit(): void {
@@ -18,7 +20,10 @@ export class HomeComponent implements OnInit {
 
   async getConcerts(){
     this.concertService.getUpcomingConcerts(10)
-    .then(value => this.concerts = value)
+    .then(value => {
+      this.concerts = value; 
+      this.isLoading = false;
+    })
     .catch(error => {});
   }
 

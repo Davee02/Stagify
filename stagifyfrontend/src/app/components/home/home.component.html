@@ -1,11 +1,14 @@
 <div class="grid-container">    
     <h1>Konzerte</h1>
-    <div *ngIf="!(concerts)">
-        Keine Konzertvorschläge vorhanden
+    <div *ngIf="isLoading; else loaded">
+        loading...
     </div>
-    <div *ngIf="concerts">
-        <div *ngFor="let concert of concerts">
-            <app-concert-item concertImagePath="{{concert.Artwork}}" concertName="{{concer.DisplayName}}"></app-concert-item>
+    <ng-template #loaded>
+        <div *ngIf="concerts.length == 0">
+            Keine Konzertvorschläge vorhanden
         </div>
-    </div>
+        <div *ngFor="let concert of concerts">
+            <app-concert-item concertModel="{{concert}}"></app-concert-item>
+        </div>
+    </ng-template>
 </div>

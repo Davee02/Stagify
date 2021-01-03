@@ -4,4 +4,5 @@ export default class UserModel{
     username:string;
     firstname:string;
     lastname:string;
+    artistId:number;
 }
