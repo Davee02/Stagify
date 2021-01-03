@@ -1,6 +1,8 @@
 <header>
     <nav>
-        <img src="assets/logo.svg" alt="logo" id="icon">
+        <a href="/">
+            <img src="assets/logo.svg" alt="logo" id="icon">
+        </a>
         <div class="user-search-container">
             <app-search-bar class="search-bar"></app-search-bar>
             <div *ngIf="authService.isLoggedIn(); else login">
