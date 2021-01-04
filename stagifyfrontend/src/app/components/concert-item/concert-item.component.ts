@@ -17,7 +17,7 @@ export class ConcertItemComponent implements OnInit {
   constructor(private artistService:ArtistService) { }
 
   ngOnInit(): void {
-    this.artistService.getArtist(this.concertModel.artist)
+    this.artistService.getArtist(this.concertModel.artistId)
     .then(value => {
       this.artistModel = value;
       this.isLoading = false;
