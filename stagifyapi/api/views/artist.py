@@ -59,7 +59,7 @@ def create_artist(request):
 def read_all(request):
     try:
         artists = Artist.objects.values(
-            "id", "displayname", "description", "avatar").all()
+            "id", "displayname", "description", "avatarUrl").all()
 
         return JsonResponse(list(artists), safe=False)
     except Exception as e:
@@ -76,6 +76,9 @@ def set_avatar(request):
         artist = Artist.objects.get(userId=user)
         artist.avatar = request.FILES["avatar"]
         artist.avatar.name = '%s%s' % (uuid.uuid4(), artist.avatar.name)
+        artist.save()
+
+        artist.avatarUrl = artist.avatar.url
         artist.save()
 
         return JsonResponse({"message": "Successfully updated artist avatar"})
@@ -120,10 +123,10 @@ def update_artist(request):
 @require_http_methods(["GET"])
 def read_artist(request, artistId):
     try:
-        artists = Artist.objects.values(
-            "id", "displayname", "description", "avatar").get(pk=artistId)
+        artist = Artist.objects.values(
+            "id", "displayname", "description", "avatarUrl").get(pk=artistId)
 
-        return JsonResponse(artists, safe=False)
+        return JsonResponse(artist, safe=False)
     except Artist.DoesNotExist:
         return JsonResponse({"message": 'The specified artist does not exist'}, status=404)
     except Exception as e:
@@ -134,7 +137,7 @@ def read_artist(request, artistId):
 def by_searchterm(request, searchTerm):
     try:
         artists = Artist.objects.values(
-            "id", "displayname", "description", "avatar").filter(Q(displayname__icontains=searchTerm) | Q(description__icontains=searchTerm))
+            "id", "displayname", "description", "avatarUrl").filter(Q(displayname__icontains=searchTerm) | Q(description__icontains=searchTerm))
 
         return JsonResponse(list(artists), safe=False)
     except Artist.DoesNotExist:

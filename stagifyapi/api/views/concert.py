@@ -84,7 +84,7 @@ def create_concert(request):
 def read_concert(request, concertId):
     try:
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).get(pk=concertId)
+            "id", "displayname", "description", "artworkUrl", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatarUrl")).get(pk=concertId)
 
         return JsonResponse(concert, safe=False)
     except KeyError:
@@ -99,7 +99,7 @@ def by_artist(request, artistId):
     try:
         artist = Artist.objects.get(pk=artistId)
         concert = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).filter(artist=artist)
+            "id", "displayname", "description", "artworkUrl", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatarUrl")).filter(artist=artist)
 
         return JsonResponse(list(concert), safe=False)
     except KeyError:
@@ -155,7 +155,7 @@ def update_concert(request, concertId):
 def read_all(request):
     try:
         concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).all()
+            "id", "displayname", "description", "artworkUrl", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatarUrl")).all()
 
         return JsonResponse(list(concerts), safe=False)
     except KeyError:
@@ -170,7 +170,7 @@ def suggestions(request):
 
         suggestions_count = int(request.GET.get("count", 5))      
         all_concerts = Concert.objects.values(
-            "id", "displayname", "description", "artwork", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatar")).all()
+            "id", "displayname", "description", "artworkUrl", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatarUrl")).all()
 
         concerts_count = Concert.objects.count()
         if(suggestions_count > concerts_count):
@@ -200,6 +200,9 @@ def set_artwork(request, concertId):
 
         concert.artwork = request.FILES["artwork"]
         concert.artwork.name = '%s%s' % (uuid.uuid4(), concert.artwork.name)
+        concert.save()
+
+        concert.artworkUrl = concert.artwork.url
         concert.save()
 
         return JsonResponse({"message": "Successfully updated concert artwork"})

@@ -1,12 +1,15 @@
 <div *ngIf="artistModel">
     <div class="concert-container">
-        <img src="{{concertModel.artwork}}" class="concert-image">
-        <a href="/artists/{{artistModel.displayname}}">
-            <img src="{{artistModel.avatar}}" alt="artist image" class="artis-image-small"/>
-        </a>
         <div>
-            <p>{{concertModel.displayname}}</p>
+            <b>{{concertModel.displayname}}</b>
             <p>{{concertModel.startDateTime}}</p>
+        </div>
+        <img src="{{concertModel.artworkUrl}}" class="concert-image">
+        <div>
+            <a href="/artists/{{artistModel.displayname}}">
+                <img src="{{artistModel.avatarUrl}}" alt="artist image" class="artist-image-small"/>
+            </a>
         </div>
     </div>
 </div>
+<hr>
