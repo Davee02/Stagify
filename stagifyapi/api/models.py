@@ -27,3 +27,9 @@ class Concert(models.Model):
     startDateTime = models.DateTimeField()
     duration = models.PositiveIntegerField()
     artist = models.ForeignKey(Artist, on_delete=models.DO_NOTHING)
+
+
+class PurchaseOrder(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    concert = models.ForeignKey(Concert, on_delete=models.DO_NOTHING)
+    purchaseDateTime = models.DateTimeField()
