@@ -13,18 +13,10 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports:[
-        HttpClientTestingModule,
-        RouterTestingModule,
-        OverlayModule
-      ],
-      providers: [
-        FormBuilder,
-        MatSnackBar
-      ],
-      declarations: [ LoginComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, RouterTestingModule, OverlayModule],
+      providers: [FormBuilder, MatSnackBar],
+      declarations: [LoginComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

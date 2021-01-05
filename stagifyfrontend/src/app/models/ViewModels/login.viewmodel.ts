@@ -1,4 +1,4 @@
-export default class LoginViewModel{
-    username:string;
-    password:string;
+export default class LoginViewModel {
+  username: string;
+  password: string;
 }

@@ -11,16 +11,10 @@ describe('SearchBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports:[
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      providers:[
-        FormBuilder
-      ],
-      declarations: [ SearchBarComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [FormBuilder],
+      declarations: [SearchBarComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

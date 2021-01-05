@@ -1,6 +1,6 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClient } from '@angular/common/http';
-import {  HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,11 +27,9 @@ describe('AppComponent', () => {
         AppRoutingModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
-        OverlayModule
+        OverlayModule,
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
       providers: [FormBuilder, MatSnackBar],
     }).compileComponents();
   });

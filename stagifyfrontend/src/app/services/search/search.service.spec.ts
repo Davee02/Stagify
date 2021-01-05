@@ -10,13 +10,8 @@ describe('SearchService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:[
-        HttpClientTestingModule,
-        RouterTestingModule,
-      ],
-      providers: [
-        FormBuilder,
-      ],
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      providers: [FormBuilder],
     });
     service = TestBed.inject(SearchService);
   });

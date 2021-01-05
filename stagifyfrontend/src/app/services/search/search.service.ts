@@ -4,17 +4,15 @@ import ArtistModel from 'src/app/models/artist.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SearchService {
   private apiUrl = environment.apiUrl;
-  constructor(private httpClient:HttpClient ) { }
+  constructor(private httpClient: HttpClient) {}
 
-  async searchArtists(value:string): Promise<Array<ArtistModel>>{
+  async searchArtists(value: string): Promise<Array<ArtistModel>> {
     return this.httpClient
       .get<Array<ArtistModel>>(this.apiUrl + '/artists/search/' + value)
-      .toPromise()
-   }
-
-
+      .toPromise();
+  }
 }

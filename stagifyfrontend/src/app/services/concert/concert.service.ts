@@ -7,32 +7,35 @@ import ConcertModel from '../../models/concert.model';
 import CreateConcertViewModel from '../../models/ViewModels/create-concert.viewmodel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConcertService {
-  apiUrl:string = environment.apiUrl;
-  constructor(private httpClient:HttpClient) { }
-  
-  async getUpcomingConcerts(numberOfSuggestions:number): Promise< Array<ConcertModel>>{
+  apiUrl: string = environment.apiUrl;
+  constructor(private httpClient: HttpClient) {}
+
+  async getUpcomingConcerts(
+    numberOfSuggestions: number
+  ): Promise<Array<ConcertModel>> {
     return this.httpClient
-        .get< Array<ConcertModel>>(this.apiUrl+'/concerts/suggestions?count='+numberOfSuggestions)
-        .toPromise();
+      .get<Array<ConcertModel>>(
+        this.apiUrl + '/concerts/suggestions?count=' + numberOfSuggestions
+      )
+      .toPromise();
   }
 
-  createConcert(concert:CreateConcertViewModel){
-    return this.httpClient.post(this.apiUrl+ '/concerts',
+  createConcert(concert: CreateConcertViewModel) {
+    return this.httpClient.post(
+      this.apiUrl + '/concerts',
       JSON.stringify(concert),
       {
         headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      });
+      }
+    );
   }
 
-  getLoggedInUsersConcerts(): Observable<ConcertModel>{
-    return this.httpClient
-      .get<ConcertModel>(this.apiUrl+'/concerts');
+  getLoggedInUsersConcerts(): Observable<ConcertModel> {
+    return this.httpClient.get<ConcertModel>(this.apiUrl + '/concerts');
   }
 
-  getOwnedConcerts(){
-
-  }
+  getOwnedConcerts() {}
 }

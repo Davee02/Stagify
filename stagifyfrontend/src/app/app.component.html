@@ -1,22 +1,19 @@
 <header>
-    <nav>
-        <a href="/">
-            <img src="assets/logo.svg" alt="logo" id="icon">
+  <nav>
+    <a href="/">
+      <img src="assets/logo.svg" alt="logo" id="icon" />
+    </a>
+    <div class="user-search-container">
+      <app-search-bar class="search-bar"></app-search-bar>
+      <div *ngIf="authService.isLoggedIn(); else login">
+        <a href="/user" class="user-link">
+          <img src="assets/usericon.png" alt="user" class="user-icon icon" />
         </a>
-        <div class="user-search-container">
-            <app-search-bar class="search-bar"></app-search-bar>
-            <div *ngIf="authService.isLoggedIn(); else login">
-                <a href="/user" class="user-link">
-                    <img src="assets/usericon.png"  alt="user" class="user-icon icon"/>
-                </a>
-            </div>
-            <ng-template #login>
-                <a href="/login">
-                    Login
-                </a>
-            </ng-template>
-        </div>
-    </nav>
+      </div>
+      <ng-template #login>
+        <a href="/login"> Login </a>
+      </ng-template>
+    </div>
+  </nav>
 </header>
-<router-outlet>
-</router-outlet>
+<router-outlet> </router-outlet>

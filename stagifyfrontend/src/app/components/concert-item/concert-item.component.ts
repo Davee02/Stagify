@@ -6,22 +6,19 @@ import { ArtistService } from 'src/app/services/artist/artist.service';
 @Component({
   selector: 'app-concert-item',
   templateUrl: './concert-item.component.html',
-  styleUrls: ['./concert-item.component.scss']
+  styleUrls: ['./concert-item.component.scss'],
 })
 export class ConcertItemComponent implements OnInit {
-
   @Input() concertModel: ConcertModel;
-  isLoading:boolean = true;
-  artistModel:ArtistModel;
+  isLoading: boolean = true;
+  artistModel: ArtistModel;
 
-  constructor(private artistService:ArtistService) { }
+  constructor(private artistService: ArtistService) {}
 
   ngOnInit(): void {
-    this.artistService.getArtist(this.concertModel.artistId)
-    .then(value => {
+    this.artistService.getArtist(this.concertModel.artistId).then((value) => {
       this.artistModel = value;
       this.isLoading = false;
-    } ) 
+    });
   }
-
 }

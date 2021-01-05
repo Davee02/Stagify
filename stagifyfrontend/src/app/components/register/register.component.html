@@ -1,35 +1,25 @@
 <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
-    <div>
-      <label for="email">
-      E-Mail Adresse
-      </label>
-      <input id="email" type="email" formControlName="email">
-    </div>
-  
-    <div>
-      <label for="username">
-          Benutzername
-      </label>
-      <input id="username" type="text" formControlName="username">
-    </div>
+  <div>
+    <label for="email"> E-Mail Adresse </label>
+    <input id="email" type="email" formControlName="email" />
+  </div>
 
-    <div>
-      <label for="password">
-          Passwort
-      </label>
-      <input id="password" type="password" formControlName="password">
-    </div>
-    <div>
-      <label for="firstname">
-          Vorname
-      </label>
-      <input id="firstname" type="text" formControlName="firstname">
-    </div>
-    <div>
-      <label for="lastname">
-          Nachname
-      </label>
-      <input id="lastname" type="text" formControlName="lastname">
-    </div>
-    <button class="button" type="submit">Register</button>
-  </form>
+  <div>
+    <label for="username"> Benutzername </label>
+    <input id="username" type="text" formControlName="username" />
+  </div>
+
+  <div>
+    <label for="password"> Passwort </label>
+    <input id="password" type="password" formControlName="password" />
+  </div>
+  <div>
+    <label for="firstname"> Vorname </label>
+    <input id="firstname" type="text" formControlName="firstname" />
+  </div>
+  <div>
+    <label for="lastname"> Nachname </label>
+    <input id="lastname" type="text" formControlName="lastname" />
+  </div>
+  <button class="button" type="submit">Register</button>
+</form>

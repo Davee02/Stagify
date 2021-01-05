@@ -6,15 +6,12 @@ import { AuthenticationService } from './services/authentication/authentication/
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(public authService:AuthenticationService) {
-  }
+  constructor(public authService: AuthenticationService) {}
 
-  async ngOnInit(): Promise<void> {
-  }
-
+  async ngOnInit(): Promise<void> {}
 
   title = 'Stagify';
 }

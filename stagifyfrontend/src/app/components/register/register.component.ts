@@ -8,36 +8,37 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {  
-  registerForm:FormGroup;
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
 
   constructor(
-    private authService:AuthenticationService, 
-    private formBuilder:FormBuilder,
-    private snackBar:MatSnackBar,
-    private router:Router
-    ) { 
+    private authService: AuthenticationService,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
     this.registerForm = this.formBuilder.group({
       username: new FormControl(''),
       email: new FormControl(''),
       password: new FormControl(''),
       firstname: new FormControl(''),
-      lastname: new FormControl('')
+      lastname: new FormControl(''),
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  async register(registerData){
+  async register(registerData) {
     var response = await this.authService.register(registerData);
-    if(response.ok){
+    if (response.ok) {
       this.snackBar.open('Register Succeeded');
       this.router.navigate(['login']);
-    }else{
-      this.snackBar.open('Register failed something must be wrong, please try again');
+    } else {
+      this.snackBar.open(
+        'Register failed something must be wrong, please try again'
+      );
     }
   }
 }

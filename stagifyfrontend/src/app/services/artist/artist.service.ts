@@ -4,23 +4,22 @@ import ArtistModel from 'src/app/models/artist.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArtistService {
-  apiUrl:string = environment.apiUrl
-  
-  constructor(private httpClient:HttpClient) { }
+  apiUrl: string = environment.apiUrl;
 
-  async allArtists(): Promise<Array<ArtistModel>>{
+  constructor(private httpClient: HttpClient) {}
+
+  async allArtists(): Promise<Array<ArtistModel>> {
     return this.httpClient
       .get<Array<ArtistModel>>(this.apiUrl + '/artists')
-      .toPromise()
+      .toPromise();
   }
 
-
-  async getArtist(id:number):Promise<ArtistModel>{
+  async getArtist(id: number): Promise<ArtistModel> {
     return this.httpClient
-    .get<ArtistModel>(this.apiUrl + '/artists/' + id)
-    .toPromise()
+      .get<ArtistModel>(this.apiUrl + '/artists/' + id)
+      .toPromise();
   }
 }

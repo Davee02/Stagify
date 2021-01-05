@@ -9,9 +9,7 @@ describe('IsLoggedInGuardGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:[
-        HttpClientTestingModule
-      ]        
+      imports: [HttpClientTestingModule],
     });
     guard = TestBed.inject(IsLoggedInGuardGuard);
   });

@@ -1,15 +1,14 @@
-<div *ngIf="isLoading else loaded">
-    loading...
-</div>
+<div *ngIf="isLoading; else loaded">loading...</div>
 <ng-template #loaded>
-    <div *ngIf="userModel else error">
-        <div><b>Username: </b>{{userModel.username}}</div>
-        <div><b>Lastname: </b>{{userModel.lastname}}</div>
-        <div><b>Firstname: </b>{{userModel.firstname}}</div>
-        <button (click)="logout()">Logout</button>
-    </div>
+  <div *ngIf="userModel; else error">
+    <div><b>Username: </b>{{ userModel.username }}</div>
+    <div><b>Lastname: </b>{{ userModel.lastname }}</div>
+    <div><b>Firstname: </b>{{ userModel.firstname }}</div>
+    <button (click)="logout()">Logout</button>
+  </div>
 </ng-template>
 <ng-template #error>
-    Userdaten konnten nicht geladen werden, bitte versuche neu zu Laden. Falls das nicht funktioniert melde dich ab und log dich neu ein.ng-template
-    <button (click)="logout()">Logout</button>
+  Userdaten konnten nicht geladen werden, bitte versuche neu zu Laden. Falls das
+  nicht funktioniert melde dich ab und log dich neu ein.ng-template
+  <button (click)="logout()">Logout</button>
 </ng-template>

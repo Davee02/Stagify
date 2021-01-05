@@ -13,18 +13,10 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports:[
-        HttpClientTestingModule,
-        RouterTestingModule,
-        OverlayModule
-      ],
-      providers: [
-        FormBuilder,
-        MatSnackBar
-      ],
-      declarations: [ RegisterComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, RouterTestingModule, OverlayModule],
+      providers: [FormBuilder, MatSnackBar],
+      declarations: [RegisterComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
