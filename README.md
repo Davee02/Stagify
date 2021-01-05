@@ -36,3 +36,9 @@ npm start
 ```
 
 The frontend is now available on `http://localhost:4200/`, the backend on `http://localhost:8000/`
+
+
+To ensure that all typescript and python files we write are formatted identically, we use the following tools:
+
+- Typescript: [Prettier](https://prettier.io/) (run with `npx prettier --write ./stagifyfrontend`)
+- Python: [Black](https://black.readthedocs.io/en/stable/) (run with `python -m black ./stagifyapi`)
