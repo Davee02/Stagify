@@ -238,6 +238,12 @@ def buy_ticket(request, concertId):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
+        request_data = json.loads(request.body)
+        send_confirmation_email = request_data['sendConfirmationEmail']
+
+        if send_confirmation_email == True:
+            print("YES")
+
         user = User.objects.get(username=request.user.username)
         concert = Concert.objects.get(pk=concertId)
 
@@ -254,12 +260,14 @@ def buy_ticket(request, concertId):
 
         try:
             send_mail("Stagify - Purchase Confirmation", "Hello there!\nWe confirm your ticket purchase for the concert '" +
-                  concert.displayname + "' which will take part on " + concert.startDateTime.strftime("%m/%d/%Y, %H:%M:%S"), 'purchases@stagify.io', [user.email], fail_silently=False)
+                      concert.displayname + "' which will take part on " + concert.startDateTime.strftime("%m/%d/%Y, %H:%M:%S"), 'purchases@stagify.io', [user.email], fail_silently=False)
         except Exception as e:
             return JsonResponse({"message": "An unexpected error happened while sending the confirmation email" + str(e)}, status=500)
 
         return JsonResponse({"message": 'Successfully created purchase order'}, status=200)
 
+    except KeyError:
+        return JsonResponse({"message": "Malformed data!"}, status=400)
     except Concert.DoesNotExist:
         return JsonResponse({"message": 'The specified concert does not exist'}, status=404)
     except Exception as e:
