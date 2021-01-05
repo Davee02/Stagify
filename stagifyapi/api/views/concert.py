@@ -8,8 +8,10 @@ from django.urls.conf import path
 from django.db.models import F
 from django.utils.dateparse import parse_datetime
 from django.views.decorators.http import require_http_methods
+from django.core.mail import send_mail
 from ..models import Artist, Concert, PurchaseOrder
 import uuid
+
 
 def validate_concert(displayname, description, duration, startDateTime):
     if not displayname:
@@ -34,6 +36,7 @@ def validate_concert(displayname, description, duration, startDateTime):
 
     return True, None
 
+
 @require_http_methods(["GET", "POST"])
 def index(request):
     if request.method == "POST":
@@ -49,6 +52,7 @@ def concert_id(request, concertId):
     elif request.method == "GET":
         return read_concert(request, concertId)
 
+
 @require_http_methods(["GET", "POST"])
 def tickets(request, concertId):
     if request.method == "GET":
@@ -56,20 +60,22 @@ def tickets(request, concertId):
     elif request.method == "POST":
         return buy_ticket(request, concertId)
 
+
 @require_http_methods(["POST"])
 def create_concert(request):
     try:
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
-        user = User.objects.get(username=request.user.username)   
+        user = User.objects.get(username=request.user.username)
         artist = Artist.objects.get(userId=user)
 
         request_concert = json.loads(request.body)
         displayname = request_concert['displayname']
         description = request_concert['description']
 
-        concert_valid, validation_error = validate_concert(displayname, description, request_concert['duration'], request_concert['startDateTime'])
+        concert_valid, validation_error = validate_concert(
+            displayname, description, request_concert['duration'], request_concert['startDateTime'])
         if not concert_valid:
             return JsonResponse({"message": validation_error}, status=400)
 
@@ -77,7 +83,7 @@ def create_concert(request):
         startDateTime = parse_datetime(request_concert['startDateTime'])
 
         Concert.objects.create(displayname=displayname, description=description,
-                             duration=duration, startDateTime=startDateTime, artist=artist)
+                               duration=duration, startDateTime=startDateTime, artist=artist)
 
         return JsonResponse({"message": "Successfully created concert"})
     except KeyError:
@@ -102,6 +108,7 @@ def read_concert(request, concertId):
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
+
 @require_http_methods(["GET"])
 def by_artist(request, artistId):
     try:
@@ -124,14 +131,15 @@ def update_concert(request, concertId):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
-        user = User.objects.get(username=request.user.username)   
+        user = User.objects.get(username=request.user.username)
         artist = Artist.objects.get(userId=user)
 
         request_concert = json.loads(request.body)
         displayname = request_concert['displayname']
         description = request_concert['description']
 
-        concert_valid, validation_error = validate_concert(displayname, description, request_concert['duration'], request_concert['startDateTime'])
+        concert_valid, validation_error = validate_concert(
+            displayname, description, request_concert['duration'], request_concert['startDateTime'])
         if not concert_valid:
             return JsonResponse({"message": validation_error}, status=400)
 
@@ -176,7 +184,7 @@ def read_all(request):
 def suggestions(request):
     try:
 
-        suggestions_count = int(request.GET.get("count", 5))      
+        suggestions_count = int(request.GET.get("count", 5))
         all_concerts = Concert.objects.values(
             "id", "displayname", "description", "artworkUrl", "duration", "startDateTime", artistId=F("artist"), artistDisplayname=F("artist__displayname"), artistAvatar=F("artist__avatarUrl")).all()
 
@@ -199,7 +207,7 @@ def set_artwork(request, concertId):
         if not request.user.is_authenticated:
             return JsonResponse({"message": 'Unauthorized'}, status=401)
 
-        user = User.objects.get(username=request.user.username)   
+        user = User.objects.get(username=request.user.username)
         artist = Artist.objects.get(userId=user)
 
         concert = Concert.objects.get(pk=concertId)
@@ -223,6 +231,7 @@ def set_artwork(request, concertId):
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
 
+
 @require_http_methods(["POST"])
 def buy_ticket(request, concertId):
     try:
@@ -235,11 +244,19 @@ def buy_ticket(request, concertId):
         if concert.artist.userId.id == user.id:
             return JsonResponse({"message": 'Cannot buy a ticket for your own concert'}, status=400)
 
-        existing_order_count = PurchaseOrder.objects.filter(Q(user=user) & Q(concert=concert)).count()
+        existing_order_count = PurchaseOrder.objects.filter(
+            Q(user=user) & Q(concert=concert)).count()
         if existing_order_count > 0:
             return JsonResponse({"message": 'A purchase order for that concert is already existent'}, status=409)
 
-        PurchaseOrder.objects.create(user=user, concert=concert, purchaseDateTime=datetime.datetime.now())
+        PurchaseOrder.objects.create(
+            user=user, concert=concert, purchaseDateTime=datetime.datetime.now())
+
+        try:
+            send_mail("Stagify - Purchase Confirmation", "Hello there!\nWe confirm your ticket purchase for the concert '" +
+                  concert.displayname + "' which will take part on " + concert.startDateTime.strftime("%m/%d/%Y, %H:%M:%S"), 'purchases@stagify.io', [user.email], fail_silently=False)
+        except Exception as e:
+            return JsonResponse({"message": "An unexpected error happened while sending the confirmation email" + str(e)}, status=500)
 
         return JsonResponse({"message": 'Successfully created purchase order'}, status=200)
 
@@ -247,6 +264,7 @@ def buy_ticket(request, concertId):
         return JsonResponse({"message": 'The specified concert does not exist'}, status=404)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
 
 @require_http_methods(["GET"])
 def get_ticket(request, concertId):
@@ -257,7 +275,8 @@ def get_ticket(request, concertId):
         user = User.objects.get(username=request.user.username)
         concert = Concert.objects.get(pk=concertId)
 
-        existing_order_count = PurchaseOrder.objects.filter(Q(user=user) & Q(concert=concert)).count()
+        existing_order_count = PurchaseOrder.objects.filter(
+            Q(user=user) & Q(concert=concert)).count()
 
         return JsonResponse({"ticketCount": existing_order_count}, status=200)
 
@@ -265,6 +284,7 @@ def get_ticket(request, concertId):
         return JsonResponse({"message": 'The specified concert does not exist'}, status=404)
     except Exception as e:
         return JsonResponse({"message": "An unexpected error happened: " + str(e)}, status=500)
+
 
 urlpatterns = [
     path('concerts/', index,
