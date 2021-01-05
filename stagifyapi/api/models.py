@@ -13,16 +13,14 @@ class Artist(models.Model):
     displayname = models.CharField(max_length=500)
     description = models.CharField(max_length=10000)
     userId = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    avatar = models.FileField(
-        upload_to='artist_avatars', storage=select_storage)
+    avatar = models.FileField(upload_to="artist_avatars", storage=select_storage)
     avatarUrl = models.URLField()
 
 
 class Concert(models.Model):
     displayname = models.CharField(max_length=500)
     description = models.CharField(max_length=10000)
-    artwork = models.FileField(
-        upload_to='concert_artworks', storage=select_storage)
+    artwork = models.FileField(upload_to="concert_artworks", storage=select_storage)
     artworkUrl = models.URLField()
     startDateTime = models.DateTimeField()
     duration = models.PositiveIntegerField()

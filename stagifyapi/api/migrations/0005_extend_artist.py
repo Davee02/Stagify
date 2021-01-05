@@ -7,25 +7,27 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0004_create_artist'),
+        ("api", "0004_create_artist"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='concert',
-            name='artist',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='api.artist'),
+            model_name="concert",
+            name="artist",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.DO_NOTHING, to="api.artist"
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='concert',
-            name='duration',
+            model_name="concert",
+            name="duration",
             field=models.PositiveIntegerField(),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='concert',
-            name='startDateTime',
+            model_name="concert",
+            name="startDateTime",
             field=models.DateTimeField(),
             preserve_default=False,
         ),

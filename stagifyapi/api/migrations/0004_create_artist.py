@@ -7,17 +7,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0003_delete_old'),
+        ("api", "0003_delete_old"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Artist',
+            name="Artist",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('displayname', models.CharField(max_length=500)),
-                ('description', models.CharField(max_length=10000)),
-                ('avatar', models.FileField(storage=api.models.select_storage, upload_to='artist_avatars')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("displayname", models.CharField(max_length=500)),
+                ("description", models.CharField(max_length=10000)),
+                (
+                    "avatar",
+                    models.FileField(
+                        storage=api.models.select_storage, upload_to="artist_avatars"
+                    ),
+                ),
             ],
         ),
     ]

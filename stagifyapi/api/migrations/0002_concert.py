@@ -7,17 +7,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0001_initial'),
+        ("api", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Concert',
+            name="Concert",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('displayname', models.CharField(max_length=500)),
-                ('description', models.CharField(max_length=10000)),
-                ('artwork', models.FileField(storage=select_storage, upload_to='concert_artworks')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("displayname", models.CharField(max_length=500)),
+                ("description", models.CharField(max_length=10000)),
+                (
+                    "artwork",
+                    models.FileField(
+                        storage=select_storage, upload_to="concert_artworks"
+                    ),
+                ),
             ],
         ),
     ]

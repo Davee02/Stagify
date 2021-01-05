@@ -9,14 +9,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('api', '0006_add_concert_state'),
+        ("api", "0006_add_concert_state"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='artist',
-            name='userId',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.DO_NOTHING, to='auth.user'),
+            model_name="artist",
+            name="userId",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.DO_NOTHING,
+                to="auth.user",
+            ),
             preserve_default=False,
         ),
     ]

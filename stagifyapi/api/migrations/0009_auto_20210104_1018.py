@@ -6,20 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0008_remove_concert_state'),
+        ("api", "0008_remove_concert_state"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='artist',
-            name='avatarUrl',
-            field=models.URLField(default='https://osbornegroupcre.com/wp-content/uploads/2016/02/missing-image-640x360.png'),
+            model_name="artist",
+            name="avatarUrl",
+            field=models.URLField(
+                default="https://osbornegroupcre.com/wp-content/uploads/2016/02/missing-image-640x360.png"
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='concert',
-            name='artworkUrl',
-            field=models.URLField(default='https://osbornegroupcre.com/wp-content/uploads/2016/02/missing-image-640x360.png'),
+            model_name="concert",
+            name="artworkUrl",
+            field=models.URLField(
+                default="https://osbornegroupcre.com/wp-content/uploads/2016/02/missing-image-640x360.png"
+            ),
             preserve_default=False,
         ),
     ]

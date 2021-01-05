@@ -3,21 +3,37 @@ from django.contrib.auth.models import User
 from ..models import Artist
 import json
 
+
 class ArtistTest(TestCase):
     def setUp(self):
-        super_user = User.objects.create_superuser(username="superuser", password="superuser")
-        normal_user1 = User.objects.create_user(username="normaluser", password="normaluser")
-        normal_user2 = User.objects.create_user(username="normaluser2", password="normaluser2")
+        super_user = User.objects.create_superuser(
+            username="superuser", password="superuser"
+        )
+        normal_user1 = User.objects.create_user(
+            username="normaluser", password="normaluser"
+        )
+        normal_user2 = User.objects.create_user(
+            username="normaluser2", password="normaluser2"
+        )
 
-        Artist.objects.create(displayname="Displayname #1",description="Description #1", userId=normal_user1)
-        Artist.objects.create(displayname="Displayname #2",description="Description #2 test", userId=normal_user2)
-
+        Artist.objects.create(
+            displayname="Displayname #1",
+            description="Description #1",
+            userId=normal_user1,
+        )
+        Artist.objects.create(
+            displayname="Displayname #2",
+            description="Description #2 test",
+            userId=normal_user2,
+        )
 
     def test_create_artist_with_normal_user_returns_401_unauthorized(self):
-        login = self.client.login(username='normaluser', password='normaluser')
+        login = self.client.login(username="normaluser", password="normaluser")
         payload = json.loads('{"displayname": "lala"}')
 
-        response = self.client.post("/api/artists/", payload, content_type="application/json")
+        response = self.client.post(
+            "/api/artists/", payload, content_type="application/json"
+        )
 
         response_object = json.loads(response.content)
 
@@ -28,30 +44,44 @@ class ArtistTest(TestCase):
     def test_create_artist_with_no_user_returns_401_unauthorized(self):
         payload = json.loads('{"displayname": "lala"}')
 
-        response = self.client.post("/api/artists/", payload, content_type="application/json")
+        response = self.client.post(
+            "/api/artists/", payload, content_type="application/json"
+        )
 
         response_object = json.loads(response.content)
 
         self.assertEqual(response_object["message"], "Unauthorized")
         self.assertEqual(response.status_code, 401)
 
-    def test_create_artist_with_super_user_and_non_existent_user_returns_404_no_user(self):
-        login = self.client.login(username='superuser', password='superuser')
-        payload = json.loads('{"displayname": "lala", "description": "lala", "userId": 5}')
+    def test_create_artist_with_super_user_and_non_existent_user_returns_404_no_user(
+        self,
+    ):
+        login = self.client.login(username="superuser", password="superuser")
+        payload = json.loads(
+            '{"displayname": "lala", "description": "lala", "userId": 5}'
+        )
 
-        response = self.client.post("/api/artists/", payload, content_type="application/json")
+        response = self.client.post(
+            "/api/artists/", payload, content_type="application/json"
+        )
 
         response_object = json.loads(response.content)
 
         self.assertTrue(login)
-        self.assertEqual(response_object["message"], "The specified user does not exist")
+        self.assertEqual(
+            response_object["message"], "The specified user does not exist"
+        )
         self.assertEqual(response.status_code, 404)
 
-    def test_create_artist_with_super_user_and_missing_data_returns_400_malformed_data(self):
-        login = self.client.login(username='superuser', password='superuser')
+    def test_create_artist_with_super_user_and_missing_data_returns_400_malformed_data(
+        self,
+    ):
+        login = self.client.login(username="superuser", password="superuser")
         payload = json.loads('{"displayname": "Justin 3"}')
 
-        response = self.client.post("/api/artists/", payload, content_type="application/json")
+        response = self.client.post(
+            "/api/artists/", payload, content_type="application/json"
+        )
 
         response_object = json.loads(response.content)
 
@@ -92,26 +122,36 @@ class ArtistTest(TestCase):
 
         response_object = json.loads(response.content)
 
-        self.assertEqual(response_object["message"], "The specified artist does not exist")
+        self.assertEqual(
+            response_object["message"], "The specified artist does not exist"
+        )
         self.assertEqual(response.status_code, 404)
 
     def test_update_artist_without_being_artist_returns_401_not_an_artist(self):
-        login = self.client.login(username='superuser', password='superuser')
-        payload = json.loads('{"displayname": "lala", "description": "lala", "userId": 5}')
+        login = self.client.login(username="superuser", password="superuser")
+        payload = json.loads(
+            '{"displayname": "lala", "description": "lala", "userId": 5}'
+        )
 
-        response = self.client.put("/api/artists/", payload, content_type="application/json")
+        response = self.client.put(
+            "/api/artists/", payload, content_type="application/json"
+        )
 
         response_object = json.loads(response.content)
 
         self.assertTrue(login)
-        self.assertEqual(response_object["message"], "Unauthorized, you are not an artist")
+        self.assertEqual(
+            response_object["message"], "Unauthorized, you are not an artist"
+        )
         self.assertEqual(response.status_code, 401)
 
     def test_update_artist_with_being_artist_changes_values_and_returns_200_ok(self):
-        login = self.client.login(username='normaluser', password='normaluser')
+        login = self.client.login(username="normaluser", password="normaluser")
         payload = json.loads('{"displayname": "lala 1", "description": "lala 2"}')
 
-        response = self.client.put("/api/artists/", payload, content_type="application/json")
+        response = self.client.put(
+            "/api/artists/", payload, content_type="application/json"
+        )
 
         response_object = json.loads(response.content)
         updated_artist = Artist.objects.get(pk=1)

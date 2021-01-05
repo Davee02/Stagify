@@ -9,17 +9,36 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('api', '0009_auto_20210104_1018'),
+        ("api", "0009_auto_20210104_1018"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PurchaseOrder',
+            name="PurchaseOrder",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('purchaseDateTime', models.DateTimeField()),
-                ('concert', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='api.concert')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("purchaseDateTime", models.DateTimeField()),
+                (
+                    "concert",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING, to="api.concert"
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
