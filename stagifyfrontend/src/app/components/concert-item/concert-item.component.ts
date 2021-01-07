@@ -27,7 +27,7 @@ export class ConcertItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.artistService.getArtist(this.concertModel.artistId).then((value) => {
-      this.artistModel = value;
+      this.artistModel = value.body;
       this.isLoading = false;
     });
 
