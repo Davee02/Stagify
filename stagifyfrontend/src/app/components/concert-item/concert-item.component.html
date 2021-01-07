@@ -10,8 +10,8 @@
       </div>
     </div>
     <img src="{{ concertModel.artworkUrl }}" class="concert-image" />
-    <div>
-      <a href="/artists/{{ artistModel.displayname }}">
+    <div *ngIf="showUser == true" class="artist-image-small-container">
+      <a href="/artists/{{ concertModel.artistId }}">
         <img
           src="{{ artistModel.avatarUrl }}"
           alt="artist image"

@@ -13,6 +13,7 @@ import { ConcertService } from 'src/app/services/concert/concert.service';
 })
 export class ConcertItemComponent implements OnInit {
   @Input() concertModel: ConcertModel;
+  @Input() showUser: boolean;
   isLoading: boolean = true;
   hasUserBoughtTickets: boolean = true;
   artistModel: ArtistModel;
