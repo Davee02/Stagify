@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import ArtistModel from 'src/app/models/artist.model';
 import ConcertModel from 'src/app/models/concert.model';
 import { ArtistService } from 'src/app/services/artist/artist.service';
+import { ConcertService } from 'src/app/services/concert/concert.service';
 
 @Component({
   selector: 'app-concert-item',
@@ -11,17 +12,12 @@ import { ArtistService } from 'src/app/services/artist/artist.service';
 export class ConcertItemComponent implements OnInit {
 
   @Input() concertModel: ConcertModel;
+  @Input() showUser:boolean;
   isLoading:boolean = true;
-  artistModel:ArtistModel;
-
-  constructor(private artistService:ArtistService) { }
+  constructor() {
+   }
 
   ngOnInit(): void {
-    this.artistService.getArtist(this.concertModel.artistId)
-    .then(value => {
-      this.artistModel = value;
-      this.isLoading = false;
-    } ) 
   }
 
 }

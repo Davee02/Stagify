@@ -6,4 +6,6 @@ export default class ConcertModel{
     duration: number;
     startDateTime: Date;
     artistId: number;
+    artistDisplayname:string;
+    artistAvatar:string;
 }

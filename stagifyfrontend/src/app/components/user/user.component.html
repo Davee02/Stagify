@@ -2,11 +2,38 @@
     loading...
 </div>
 <ng-template #loaded>
-    <div *ngIf="userModel else error">
-        <div><b>Username: </b>{{userModel.username}}</div>
-        <div><b>Lastname: </b>{{userModel.lastname}}</div>
-        <div><b>Firstname: </b>{{userModel.firstname}}</div>
-        <button (click)="logout()">Logout</button>
+    <div class="content" *ngIf="userModel else error">
+        <div class="user-info">
+            <h1>Benutzer Informationen</h1>
+            <form  class="user-form info-form">
+                <label for="username">Benutzername</label>
+                <input id="username" type=text value="{{userModel.username}}" />
+                <label for="firstname">Vorname</label>
+                <input id="firstname" type=text value="{{userModel.firstname}}" />
+                <label for="lastname">Nachname</label>
+                <input id="lastname" type=text value="{{userModel.lastname}}" />
+                <button type="submit">Speichern</button>
+            </form>
+            <button (click)="logout()">Logout</button>
+        </div>
+        <div class="artist-info" *ngIf="artistModel">
+            <h1>Künstler Informationen</h1>
+            <div *ngIf="artistModel.avatarUrl != ''; else noPhoto">
+                <img src="{{artistModel.avatarUrl}}"/>
+            </div>
+            <ng-template #noPhoto>
+                Noch kein Photo vorhanden
+            </ng-template>
+            <form class="artist-form info-form">
+                <label for="artistname">Künstlername</label>
+                <input id="artistname" type=text value="{{artistModel.displayname}}" />
+                <label for="artist-description">Künstlername</label>
+                <textarea rows="4" cols="50">
+                    {{artistModel.description}}
+                </textarea>
+                <button type="submit">Speichern</button>
+            </form>
+        </div>
     </div>
 </ng-template>
 <ng-template #error>

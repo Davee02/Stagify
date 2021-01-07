@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CanColorCtor } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -17,6 +18,13 @@ export class ConcertService {
     return this.httpClient
         .get< Array<ConcertModel>>(this.apiUrl+'/concerts/suggestions?count='+numberOfSuggestions)
         .toPromise();
+  }
+  async getArtistsConcerts(id:number): Promise<HttpResponse<Array<ConcertModel>>>{
+    return this.httpClient
+      .get<Array<ConcertModel>>(this.apiUrl + '/concerts/artist/' + id,
+      {
+        observe: 'response'
+      }).toPromise();
   }
 
   createConcert(concert:CreateConcertViewModel){

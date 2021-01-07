@@ -1,5 +1,5 @@
-<div class="grid-container">    
-    <h1>Konzerte</h1>
+<h1>Konzerte</h1>
+<div class="flex-container">    
     <div *ngIf="isLoading; else loaded">
         loading...
     </div>
@@ -8,7 +8,7 @@
             Keine Konzertvorschläge vorhanden
         </div>
         <div *ngFor="let concert of concerts">
-            <app-concert-item [concertModel]=concert></app-concert-item>
+            <app-concert-item showUser="1" [concertModel]=concert></app-concert-item>
         </div>
     </ng-template>
 </div>

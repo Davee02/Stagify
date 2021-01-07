@@ -1,24 +1,24 @@
-.suggestion{
-    height: 450px;
-    margin-left: 2%;
-    margin-right: 2%;
-    overflow: hidden;
-    position: relative;
-    border-radius: 10px;
-}
+// .suggestion{
+//     height: 450px;
+//     margin-left: 2%;
+//     margin-right: 2%;
+//     overflow: hidden;
+//     position: relative;
+//     border-radius: 10px;
+// }
 
-.suggestion-image{
-    position: absolute;
-    top: -100%;
-}
+// .suggestion-image{
+//     position: absolute;
+//     top: -100%;
+// }
 
-.suggestion-container{
-    margin-bottom: 1%;
-}
+// .suggestion-container{
+//     margin-bottom: 1%;
+// }
 
 
 
-.grid-container{
-    display: grid;
+.flex-container{
+    display: flex;
 }
 

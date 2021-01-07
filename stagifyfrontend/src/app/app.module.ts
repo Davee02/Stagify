@@ -18,6 +18,8 @@ import { UserComponent } from './components/user/user.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ArtistItemComponent } from './components/artist-item/artist-item.component';
 import { WithCredentialsInterceptor } from './services/authentication/authentication/authentication.withcredentials.interceptor';
+import { ArtistDetailComponent } from './components/artist-detail/artist-detail.component';
+import { ArtistConcertListComponent } from './components/artist-concert-list/artist-concert-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { WithCredentialsInterceptor } from './services/authentication/authentica
     RegisterComponent,
     UserComponent,
     ArtistItemComponent,
+    ArtistDetailComponent,
+    ArtistConcertListComponent,
   ],
   imports: [
     BrowserModule,
