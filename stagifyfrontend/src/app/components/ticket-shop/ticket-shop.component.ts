@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConcertService } from '../services/concert/concert.service';
+import { ConcertService } from '../../services/concert/concert.service';
 
 @Component({
   selector: 'app-ticket-shop',

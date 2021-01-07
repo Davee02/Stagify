@@ -21,7 +21,7 @@ import { UserComponent } from './components/user/user.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ArtistItemComponent } from './components/artist-item/artist-item.component';
 import { WithCredentialsInterceptor } from './services/authentication/authentication/authentication.withcredentials.interceptor';
-import { TicketShopComponent } from './ticket-shop/ticket-shop.component';
+import { TicketShopComponent } from './components/ticket-shop/ticket-shop.component';
 
 @NgModule({
   declarations: [

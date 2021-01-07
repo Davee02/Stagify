@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SearchComponent } from './components/search/search.component';
 import { UserComponent } from './components/user/user.component';
-import { TicketShopComponent } from './ticket-shop/ticket-shop.component';
+import { TicketShopComponent } from './components/ticket-shop/ticket-shop.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
