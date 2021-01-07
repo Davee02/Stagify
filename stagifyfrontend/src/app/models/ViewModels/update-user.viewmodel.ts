@@ -1,5 +1,4 @@
-export default class UserModel {
-  id: number;
+export default class UpdateUserViewModel {
   email: string;
   username: string;
   firstname: string;
