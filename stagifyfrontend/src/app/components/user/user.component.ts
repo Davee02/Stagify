@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import ArtistModel from 'src/app/models/artist.model';
 import UserModel from 'src/app/models/user.model';
+import UpdateArtistViewModel from 'src/app/models/ViewModels/update-artist.viewmodel';
 import { ArtistService } from 'src/app/services/artist/artist.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication/authentication.service';
 import { UserService } from 'src/app/services/user/user.service';
