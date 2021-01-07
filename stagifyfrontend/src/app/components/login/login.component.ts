@@ -1,7 +1,5 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from 'src/app/services/user/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import LoginViewModel from 'src/app/models/ViewModels/login.viewmodel';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -34,7 +32,6 @@ export class LoginComponent implements OnInit {
 
   getSuccessfulLoginPath() {
     this.route.queryParams.subscribe((params) => {
-      debugger;
       this.afterSuccessfulLoginPath = params.successfulLoginPath;
     });
   }

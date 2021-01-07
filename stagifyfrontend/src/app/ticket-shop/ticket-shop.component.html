@@ -1,0 +1,26 @@
+<div>
+  <div *ngIf="alreadyBoughtTicketsCount > 0">
+    <p>
+      Du hast bereits {{ alreadyBoughtTicketsCount }} Tickets für dieses Konzert
+      gekauft!
+    </p>
+  </div>
+
+  <div *ngIf="alreadyBoughtTicketsCount == 0">
+    <div>
+      <label for="count">Amount of tickets: </label>
+      <input type="number" id="count" min="1" value="1" required />
+    </div>
+    <div>
+      <label for="sendemail">Send purchase confirmation email: </label>
+      <input
+        type="checkbox"
+        id="sendemail"
+        required
+        [(ngModel)]="sendConfirmationEmail"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+    <button (click)="buyTickets()">Buy tickets!</button>
+  </div>
+</div>

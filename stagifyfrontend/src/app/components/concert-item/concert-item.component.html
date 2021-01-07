@@ -3,6 +3,11 @@
     <div>
       <b>{{ concertModel.displayname }}</b>
       <p>{{ concertModel.startDateTime }}</p>
+      <div *ngIf="authService.isLoggedIn()">
+        <button [disabled]="hasUserBoughtTickets" (click)="buyTicket()">
+          Buy tickets
+        </button>
+      </div>
     </div>
     <img src="{{ concertModel.artworkUrl }}" class="concert-image" />
     <div>

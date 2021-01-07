@@ -330,9 +330,6 @@ def buy_ticket(request, concertId):
         request_data = json.loads(request.body)
         send_confirmation_email = request_data["sendConfirmationEmail"]
 
-        if send_confirmation_email == True:
-            print("YES")
-
         user = User.objects.get(username=request.user.username)
         concert = Concert.objects.get(pk=concertId)
 
@@ -354,25 +351,26 @@ def buy_ticket(request, concertId):
             user=user, concert=concert, purchaseDateTime=datetime.datetime.now()
         )
 
-        try:
-            send_mail(
-                "Stagify - Purchase Confirmation",
-                "Hello there!\nWe confirm your ticket purchase for the concert '"
-                + concert.displayname
-                + "' which will take part on "
-                + concert.startDateTime.strftime("%m/%d/%Y, %H:%M:%S"),
-                "purchases@stagify.io",
-                [user.email],
-                fail_silently=False,
-            )
-        except Exception as e:
-            return JsonResponse(
-                {
-                    "message": "An unexpected error happened while sending the confirmation email"
-                    + str(e)
-                },
-                status=500,
-            )
+        if send_confirmation_email == True:
+            try:
+                send_mail(
+                    "Stagify - Purchase Confirmation",
+                    "Hello there!\nWe confirm your ticket purchase for the concert '"
+                    + concert.displayname
+                    + "' which will take part on "
+                    + concert.startDateTime.strftime("%m/%d/%Y, %H:%M:%S"),
+                    "purchases@stagify.io",
+                    [user.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                return JsonResponse(
+                    {
+                        "message": "An unexpected error happened while sending the confirmation email"
+                        + str(e)
+                    },
+                    status=500,
+                )
 
         return JsonResponse(
             {"message": "Successfully created purchase order"}, status=200

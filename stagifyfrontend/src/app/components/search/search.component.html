@@ -6,6 +6,6 @@
     Keine Ergebnisse gefunden
   </div>
   <div *ngFor="let artist of artists">
-    <app-artist-item artistModel="{{ artist }}"></app-artist-item>
+    <app-artist-item [artistModel]="artist"></app-artist-item>
   </div>
 </ng-template>

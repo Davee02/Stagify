@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import ConcertTicketsState from 'src/app/models/concertTicketsState.model';
 import { environment } from 'src/environments/environment';
 import ConcertModel from '../../models/concert.model';
 import CreateConcertViewModel from '../../models/ViewModels/create-concert.viewmodel';
@@ -38,4 +38,21 @@ export class ConcertService {
   }
 
   getOwnedConcerts() {}
+
+  async getTicketsState(concertId: number): Promise<ConcertTicketsState> {
+    return this.httpClient
+      .get<ConcertTicketsState>(this.apiUrl + `/concerts/${concertId}/tickets`)
+      .toPromise();
+  }
+
+  async buyTickets(
+    concertId: number,
+    sendConfirmationEmail: boolean
+  ): Promise<any> {
+    return this.httpClient
+      .post<any>(this.apiUrl + `/concerts/${concertId}/tickets/`, {
+        sendConfirmationEmail: sendConfirmationEmail,
+      })
+      .toPromise();
+  }
 }
