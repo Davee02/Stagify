@@ -31,15 +31,6 @@ export class ConcertService {
       })
       .toPromise();
   }
-  async getArtistsConcerts(
-    id: number
-  ): Promise<HttpResponse<Array<ConcertModel>>> {
-    return this.httpClient
-      .get<Array<ConcertModel>>(this.apiUrl + '/concerts/artist/' + id, {
-        observe: 'response',
-      })
-      .toPromise();
-  }
 
   createConcert(concert: CreateConcertViewModel) {
     return this.httpClient.post(
