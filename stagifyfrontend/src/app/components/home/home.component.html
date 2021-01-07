@@ -7,12 +7,12 @@
       <app-concert-item [concertModel]="concert"></app-concert-item>
     </div>
   </ng-template>
-    <ng-template #loaded>
-        <div *ngIf="!concerts || concerts.length == 0">
-            Keine Konzertvorschläge vorhanden
-        </div>
-        <div *ngFor="let concert of concerts">
-            <app-concert-item concertModel="{{concert}}"></app-concert-item>
-        </div>
-    </ng-template>
+  <ng-template #loaded>
+    <div *ngIf="!concerts || concerts.length == 0">
+      Keine Konzertvorschläge vorhanden
+    </div>
+    <div *ngFor="let concert of concerts">
+      <app-concert-item concertModel="{{ concert }}"></app-concert-item>
+    </div>
+  </ng-template>
 </div>
