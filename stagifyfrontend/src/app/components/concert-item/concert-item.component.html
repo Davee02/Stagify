@@ -5,8 +5,11 @@
       <p>{{ concertModel.startDateTime }}</p>
       <div *ngIf="authService.isLoggedIn()">
         <button [disabled]="hasUserBoughtTickets" (click)="buyTicket()">
-          Buy tickets
+          Tickets kaufen
         </button>
+        <p *ngIf="hasUserBoughtTickets">
+          Tickets für dieses Konzert wurden bereits gekauft
+        </p>
       </div>
     </div>
     <img src="{{ concertModel.artworkUrl }}" class="concert-image" />

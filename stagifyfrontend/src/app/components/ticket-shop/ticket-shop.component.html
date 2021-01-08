@@ -8,11 +8,11 @@
 
   <div *ngIf="alreadyBoughtTicketsCount == 0">
     <div>
-      <label for="count">Amount of tickets: </label>
+      <label for="count">Anzahl Tickets: </label>
       <input type="number" id="count" min="1" value="1" required />
     </div>
     <div>
-      <label for="sendemail">Send purchase confirmation email: </label>
+      <label for="sendemail">Bestätigungsmail senden: </label>
       <input
         type="checkbox"
         id="sendemail"
@@ -21,6 +21,6 @@
         [ngModelOptions]="{ standalone: true }"
       />
     </div>
-    <button (click)="buyTickets()">Buy tickets!</button>
+    <button (click)="buyTickets()">Tickets kaufen</button>
   </div>
 </div>

@@ -1,44 +1,44 @@
 # Stagify
 
-## Development
+## Entwicklung
 
-We recommend using the code editor [Visual Studio Code](https://code.visualstudio.com/) for developing and debugging Stagify.
-After you opened the root folder of the project in Visual Studio Code install all the recommended extensions. You don't need to tweak additional settings because we're using the defaults.
+Wir empfehlen die Verwendung des Code-Editors [Visual Studio Code] (https://code.visualstudio.com/) für die Entwicklung und das Debugging von Stagify.
+Nachdem der Root-Folder des Projekts in Visual Studio Code geöffnet wurde, sollen alle empfohlenen Extensions installiert werden. Es müssen keine zusätzlichen Einstellungen vorgenommen werden, da sonst die Standardeinstellungen verwendet werden.
 
-The following softwares are required to run Stagify locally:
+Die folgenden Programme werden benötigt, um Stagify lokal auszuführen:
 
 - [Python 3](https://www.python.org/downloads/)
 - [Node.js](https://nodejs.org/en/)
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-You can proceed by running the Postgres database with docker compose:
+Danach muss die Postgres-Datenbank mit Docker Compose ausgeführt werden:
 
 ```shell
 docker-compose up -d
 ```
 
-Then you can install all python packages, run the migrations and start the dev server for the backend:
+Dann können alle Python-Pakete installiert, die Datenbank-Migrationen ausgeführt und den Dev-Server für das Backend gestartet werden:
 
 ```shell
 cd ./stagifyapi
-pip install -r requirements.txt
-python manage.py migrate
+pip install -r anforderungen.txt
+python manage.py migrieren
 python manage.py runserver
 ```
 
-For running the frontend you have to restore all node packages and start the dev server:
+Um das Frontend zu starten, müssen alle Node-Pakete wiederherstellt und der Dev-Server gestartet werden:
 
-```shell
+```Shell
 cd ../stagifyfrontend
 npm i
-npm start
+npm starten
 ```
 
-The frontend is now available on `http://localhost:4200/`, the backend on `http://localhost:8000/`
+Das Frontend ist nun auf `http://localhost:4200/` verfügbar, das Backend auf `http://localhost:8000/`.
 
 
-To ensure that all typescript and python files we write are formatted identically, we use the following tools:
+Um sicherzustellen, dass alle Typescript- und Python-Dateien, die wir schreiben, identisch formatiert sind, verwenden wir die folgenden Tools:
 
-- Typescript: [Prettier](https://prettier.io/) (run with `npx prettier --write ./stagifyfrontend`)
-- Python: [Black](https://black.readthedocs.io/en/stable/) (run with `python -m black ./stagifyapi`)
+- Typescript: [Prettier](https://prettier.io/) (ausgeführt mit `npx prettier --write ./stagifyfrontend`)
+- Python: [Black](https://black.readthedocs.io/en/stable/) (ausgeführt mit `python -m black ./stagifyapi`)
