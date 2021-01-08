@@ -5,29 +5,27 @@ import { ConcertService } from 'src/app/services/concert/concert.service';
 @Component({
   selector: 'app-artist-concert-list',
   templateUrl: './artist-concert-list.component.html',
-  styleUrls: ['./artist-concert-list.component.scss']
+  styleUrls: ['./artist-concert-list.component.scss'],
 })
 export class ArtistConcertListComponent implements OnInit {
-  @Input() artistId:number;
-  concerts:Array<ConcertModel>
-  isLoading:boolean = true;
-  error:boolean = false;
-    
-  constructor(private concertService:ConcertService) { }
+  @Input() artistId: number;
+  concerts: Array<ConcertModel>;
+  isLoading: boolean = true;
+  error: boolean = false;
+
+  constructor(private concertService: ConcertService) {}
 
   ngOnInit(): void {
-    this.concertService.getArtistsConcerts(this.artistId)
-    .then(x => {
-      if(x.ok){
+    this.concertService.getArtistsConcerts(this.artistId).then((x) => {
+      if (x.ok) {
         debugger;
         this.concerts = x.body;
-        this.isLoading = false
-      }else{
+        this.isLoading = false;
+      } else {
         debugger;
         this.error = true;
         this.isLoading = false;
       }
-    })
+    });
   }
-
 }

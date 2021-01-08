@@ -1,22 +1,21 @@
-<div *ngIf="isLoading else loaded">
-    loading...
-</div>
+<div *ngIf="isLoading; else loaded">loading...</div>
 
 <ng-template #loaded>
-    <div *ngIf="error == null; else errorView">
-        <img src="{{artistModel.avatarUrl}}"/>
-        <h1>{{artistModel.displayname}}</h1>
-        <p>{{artistModel.description}}</p>
-        <app-artist-concert-list artistId="{{artistModel.id}}"></app-artist-concert-list>
-    </div>
+  <div *ngIf="error == null; else errorView">
+    <img src="{{ artistModel.avatar }}" />
+    <h1>{{ artistModel.displayname }}</h1>
+    <p>{{ artistModel.description }}</p>
+    <app-artist-concert-list
+      artistId="{{ artistModel.id }}"
+    ></app-artist-concert-list>
+  </div>
 </ng-template>
 
 <ng-template #errorView>
-    <div *ngIf="error == 404; else notFourOFour">
-        Künstler konnte nicht gefunden werden.
-    </div>
-    <ng-template #notFourOFour>
-        Fehler beim laden des Künsters.
-        Bitte versuche es erneut
-    </ng-template>
+  <div *ngIf="error == 404; else notFourOFour">
+    Künstler konnte nicht gefunden werden.
+  </div>
+  <ng-template #notFourOFour>
+    Fehler beim laden des Künsters. Bitte versuche es erneut
+  </ng-template>
 </ng-template>

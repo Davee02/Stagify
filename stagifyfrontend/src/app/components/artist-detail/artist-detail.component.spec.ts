@@ -10,13 +10,9 @@ describe('ArtistDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports:[
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      declarations: [ ArtistDetailComponent ]
-    })
-    .compileComponents();
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [ArtistDetailComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

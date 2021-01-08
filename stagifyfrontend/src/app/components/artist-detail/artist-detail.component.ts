@@ -9,40 +9,37 @@ import { ConcertService } from 'src/app/services/concert/concert.service';
 @Component({
   selector: 'app-artist-detail',
   templateUrl: './artist-detail.component.html',
-  styleUrls: ['./artist-detail.component.scss']
+  styleUrls: ['./artist-detail.component.scss'],
 })
 export class ArtistDetailComponent implements OnInit {
-  artistModel:ArtistModel = new ArtistModel();
-  concerts:Array<ConcertModel> = new Array<ConcertModel>();
-  isLoading:boolean = true;
-  error:number;
+  artistModel: ArtistModel = new ArtistModel();
+  concerts: Array<ConcertModel> = new Array<ConcertModel>();
+  isLoading: boolean = true;
+  error: number;
 
   constructor(
-    private artistService:ArtistService, 
-    private router:Router,
-    private route:ActivatedRoute) { 
-      
-  }
+    private artistService: ArtistService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.params
-    .subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.artistModel.id = params.id;
       this.getArtistData();
     });
   }
 
-  getArtistData(){
-    this.artistService.getArtist(this.artistModel.id)
-    .then(x =>  {
-      this.artistModel = x.body;
-      this.isLoading = false;
-    })
-    .catch((response:HttpResponse<any>) => {
-      this.error = response.status;
-      this.isLoading = false;
-    }
-    );
-    
+  getArtistData() {
+    this.artistService
+      .getArtist(this.artistModel.id)
+      .then((x) => {
+        this.artistModel = x.body;
+        this.isLoading = false;
+      })
+      .catch((response: HttpResponse<any>) => {
+        this.error = response.status;
+        this.isLoading = false;
+      });
   }
 }

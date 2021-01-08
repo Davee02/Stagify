@@ -1,15 +1,14 @@
-<div *ngIf="isLoading; else loaded">
-    loading...
-</div>
+<div *ngIf="isLoading; else loaded">loading...</div>
 
 <ng-template #loaded>
-    <div *ngIf="error == false; else errorView">
-        <div *ngFor="let concert of concerts">
-            <app-concert-item showUser="false" concertModel="{{concert}}"></app-concert-item>
-        </div>
+  <div *ngIf="error == false; else errorView">
+    <div *ngFor="let concert of concerts">
+      <app-concert-item
+        showUser="false"
+        concertModel="{{ concert }}"
+      ></app-concert-item>
     </div>
+  </div>
 </ng-template>
 
-<ng-template #errorView>
-    Fehler beim laden der Konzerte
-</ng-template>
+<ng-template #errorView> Fehler beim laden der Konzerte </ng-template>
