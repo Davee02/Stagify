@@ -1,8 +1,10 @@
 # Stagify
 
+Die produktive Version der Applikation kann unter der folgenden URL erreicht werden: <https://stagifyapp.azurewebsites.net/>. Da wir für das Frontend und Backend Azure App Services in der Preiskategorie "Free" benutzen, muss mit längeren Ladezeiten gerechnet werden.
+
 ## Entwicklung
 
-Wir empfehlen die Verwendung des Code-Editors [Visual Studio Code] (https://code.visualstudio.com/) für die Entwicklung und das Debugging von Stagify.
+Wir empfehlen die Verwendung des Code-Editors [Visual Studio Code](https://code.visualstudio.com/) für die Entwicklung und das Debugging von Stagify.
 Nachdem der Root-Folder des Projekts in Visual Studio Code geöffnet wurde, sollen alle empfohlenen Extensions installiert werden. Es müssen keine zusätzlichen Einstellungen vorgenommen werden, da sonst die Standardeinstellungen verwendet werden.
 
 Die folgenden Programme werden benötigt, um Stagify lokal auszuführen:
