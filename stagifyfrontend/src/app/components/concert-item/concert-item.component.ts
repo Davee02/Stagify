@@ -13,6 +13,7 @@ import { ConcertService } from 'src/app/services/concert/concert.service';
 })
 export class ConcertItemComponent implements OnInit {
   @Input() concertModel: ConcertModel;
+  @Input() showUser: boolean;
   isLoading: boolean = true;
   hasUserBoughtTickets: boolean = true;
   artistModel: ArtistModel;
@@ -25,14 +26,22 @@ export class ConcertItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (!this.concertModel.artistId) {
+      return;
+    }
+
     this.artistService.getArtist(this.concertModel.artistId).then((value) => {
-      this.artistModel = value;
+      this.artistModel = value.body;
       this.isLoading = false;
     });
 
-    this.concertService.getTicketsState(this.concertModel.id).then((value) => {
-      this.hasUserBoughtTickets = value.ticketCount > 0;
-    });
+    if (this.authService.isLoggedIn()) {
+      this.concertService
+        .getTicketsState(this.concertModel.id)
+        .then((value) => {
+          this.hasUserBoughtTickets = value.ticketCount > 0;
+        });
+    }
   }
 
   buyTicket(): void {

@@ -22,6 +22,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ArtistItemComponent } from './components/artist-item/artist-item.component';
 import { WithCredentialsInterceptor } from './services/authentication/authentication/authentication.withcredentials.interceptor';
 import { TicketShopComponent } from './components/ticket-shop/ticket-shop.component';
+import { ArtistDetailComponent } from './components/artist-detail/artist-detail.component';
+import { ArtistConcertListComponent } from './components/artist-concert-list/artist-concert-list.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { TicketShopComponent } from './components/ticket-shop/ticket-shop.compon
     UserComponent,
     ArtistItemComponent,
     TicketShopComponent,
+    ArtistDetailComponent,
+    ArtistConcertListComponent,
   ],
   imports: [
     BrowserModule,

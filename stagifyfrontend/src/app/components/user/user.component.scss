@@ -1,0 +1,25 @@
+.info-form {
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form {
+  grid-row: 1;
+}
+
+.artist-form {
+  grid-row: 2;
+}
+
+.content {
+  display: grid;
+  grid-template-rows: auto auto;
+  row-gap: 10px;
+  width: 40%;
+  margin: 20px;
+}
+
+textarea {
+  resize: vertical;
+}

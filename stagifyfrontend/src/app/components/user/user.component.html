@@ -1,14 +1,40 @@
 <div *ngIf="isLoading; else loaded">loading...</div>
 <ng-template #loaded>
-  <div *ngIf="userModel; else error">
-    <div><b>Benutzername: </b>{{ userModel.username }}</div>
-    <div><b>Nachname: </b>{{ userModel.lastname }}</div>
-    <div><b>Vorname: </b>{{ userModel.firstname }}</div>
-    <button (click)="logout()">Abmelden</button>
+  <div class="content" *ngIf="userModel; else error">
+    <div class="user-info">
+      <h1>Benutzer Informationen</h1>
+      <div class="user-form info-form">
+        <label for="username">Benutzername</label>
+        <input id="username" type="text" value="{{ userModel.username }}" />
+        <label for="firstname">Vorname</label>
+        <input id="firstname" type="text" value="{{ userModel.firstname }}" />
+        <label for="lastname">Nachname</label>
+        <input id="lastname" type="text" value="{{ userModel.lastname }}" />
+        <button type="submit" disabled>Speichern</button>
+        <button (click)="logout()">Logout</button>
+      </div>
+      <div class="artist-info" *ngIf="artistModel">
+        <h1>Künstler Informationen</h1>
+        <div class="artist-form info-form">
+          <label for="artistname">Künstlername</label>
+          <input
+            id="artistname"
+            type="text"
+            readonly="true"
+            value="{{ artistModel.displayname }}"
+          />
+          <label for="artist-description">Künstlername</label>
+          <textarea readonly="true">
+                    {{ artistModel.description }}
+        </textarea
+          >
+          <button type="submit" disabled>Speichern</button>
+        </div>
+      </div>
+    </div>
   </div>
-</ng-template>
-<ng-template #error>
-  Userdaten konnten nicht geladen werden, bitte versuche neu zu Laden. Falls das
-  nicht funktioniert melde dich ab und log dich neu ein.
-  <button (click)="logout()">Abmelden</button>
+  <ng-template #error>
+    Userdaten konnten nicht geladen werden, bitte versuche neu zu Laden. Falls
+    das nicht funktioniert melde dich ab und log dich neu ein
+  </ng-template>
 </ng-template>

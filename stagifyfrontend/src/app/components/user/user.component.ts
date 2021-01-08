@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import ArtistModel from 'src/app/models/artist.model';
 import UserModel from 'src/app/models/user.model';
+import UpdateArtistViewModel from 'src/app/models/ViewModels/update-artist.viewmodel';
+import { ArtistService } from 'src/app/services/artist/artist.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication/authentication.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -11,23 +16,49 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class UserComponent implements OnInit {
   userModel: UserModel;
-  isLoggedIn: boolean;
+  artistModel: ArtistModel;
   isLoading: boolean = true;
+
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private userServie: UserService
+    private userServie: UserService,
+    private artistServie: ArtistService
   ) {
     if (authService.isLoggedIn()) {
-      this.userServie.getLoggedInUser().then((value) => {
-        this.userModel = value.body;
-        this.isLoading = false;
-      });
+      this.fetchUserAndArtist();
     } else {
       router.navigate(['login'], {
         queryParams: { successfulLoginPath: 'user' },
       });
     }
+  }
+
+  fetchUserAndArtist() {
+    this.isLoading = true;
+    this.userServie.getLoggedInUser().then((value) => {
+      this.userModel = value.body;
+      if (this.userModel.artistId) {
+        this.fetchArtist();
+      }
+      this.isLoading = false;
+    });
+  }
+
+  fetchUser() {
+    this.isLoading = true;
+    this.userServie.getLoggedInUser().then((value) => {
+      this.userModel = value.body;
+      this.isLoading = false;
+    });
+  }
+
+  fetchArtist() {
+    this.isLoading = true;
+    this.artistServie.getArtist(this.userModel.artistId).then((x) => {
+      this.artistModel = x.body;
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {}
